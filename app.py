@@ -110,7 +110,7 @@ m1, m2, m4 = load_models()
 
 def predict(model, img):
     img_resized = img.convert("RGB").resize((224, 224))
-    x = np.array(img_resized, dtype="float32") / 255.0  # التطبيع (Normalization) إذا كان مطلوباً، أو اتركه حسب تدريب نموذجك
+    x = np.array(img_resized, dtype="float32") / 255.0 
     x = np.expand_dims(x, axis=0)
     p_non = float(model.predict(x, verbose=0)[0][0])
     return 1 - p_non
@@ -120,9 +120,10 @@ def label_v1v2(p_med):
     return               "🟡 Uncertain",             max(p_med, 1-p_med)
 
 def label_v4(p_med):
-    if p_med > 0.65:  return "🟢 Strong medical use",        p_med
-    if p_med < 0.35:  return "🔴 Almost no medical use",    1 - p_med
-    return               "🟡 Uncertain",                        max(p_med, 1-p_med)
+    if p_med >= 0.5:
+        return "🟢 Usage médical important", p_med
+    else:
+        return "🔴 Usage médical quasi inexistant", 1 - p_med
 
 def bar(label, pct, green=True):
     cls = "green-fill" if green else "gray-fill"
