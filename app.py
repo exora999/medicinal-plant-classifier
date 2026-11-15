@@ -9,7 +9,7 @@ from PIL import Image, ImageOps
 from tensorflow import keras
 
 st.set_page_config(
-    page_title="Medicinal Plant Classifier — Hamza Oulbayyad",
+    page_title="Medicinal Plant Classifier — Hamza Oulbayyad & Rida Bargach",
     page_icon="🌿",
     layout="wide"
 )
@@ -42,10 +42,10 @@ st.markdown("""
       backdrop-filter: blur(6px);
       border: 1px solid rgba(255, 255, 255, 0.4);
       border-radius: 999px;
-      padding: 7px 20px;
+      padding: 8px 22px;
       font-size: 0.95rem;
       color: #ffffff;
-      margin-top: 8px;
+      margin-top: 10px;
   }
   .model-card {
       background: rgba(30, 41, 59, 0.55);
@@ -268,7 +268,7 @@ st.markdown("""
   <p style="margin:0 0 14px 0;font-size:1.1rem;color:#ecfdf5;opacity:.95;">
     Compare three deep learning architectures — powered by <b>Model 4</b></p>
   <span class="hero-badge">
-    ✨ Developed by: <b>Hamza Oulbayyad</b>
+    ✨ Developed by: <b>Hamza Oulbayyad</b> &bull; <b>Rida Bargach</b>
   </span>
 </div>
 """, unsafe_allow_html=True)
@@ -396,6 +396,6 @@ st.markdown("""
 <div style="text-align:center;font-size:.85rem;color:#94a3b8;margin-top:40px;
             border-top:1px solid rgba(255,255,255,0.08);padding-top:18px;">
   ⚠️ <b>Academic & Educational Project</b> — Do NOT use this tool for medical diagnosis or consumption decisions.<br>
-  <b>Hamza Oulbayyad</b> • Dataset: Plants For A Future (pfaf.org)
+  <b>Hamza Oulbayyad & Rida Bargach</b> • Dataset: Plants For A Future (pfaf.org)
 </div>
 """, unsafe_allow_html=True)
