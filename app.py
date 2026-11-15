@@ -1,12 +1,18 @@
-import json, urllib.request, base64, io as _io, time
+import json
+import urllib.request
+import base64
+import io as _io
+import time
 import numpy as np
 import streamlit as st
-from PIL import Image
+from PIL import Image, ImageOps
 from tensorflow import keras
 
 st.set_page_config(
     page_title="Medicinal Plant Classifier — Hamza Oulbayyad",
-    page_icon="🌿", layout="wide")
+    page_icon="🌿",
+    layout="wide"
+)
 
 st.markdown("""
 <style>
@@ -109,11 +115,11 @@ def load_models():
 m1, m2, m4 = load_models()
 
 def predict(model, img):
-    img_resized = img.convert("RGB").resize((224, 224))
-    x = np.array(img_resized, dtype="float32") / 255.0 
-    x = np.expand_dims(x, axis=0)
+    x = np.expand_dims(
+        np.array(img.convert("RGB").resize((224, 224)), dtype="float32"), axis=0)
     p_non = float(model.predict(x, verbose=0)[0][0])
-    return 1 - p_non
+    return 1 - p_non   
+
 def label_v1v2(p_med):
     if p_med > 0.65:  return "🟢 Medicinal",        p_med
     if p_med < 0.35:  return "🔴 Non-medicinal",     1 - p_med
@@ -163,7 +169,7 @@ with col_input:
     st.markdown("#### 📸 Image of the plant")
     tab_up, tab_cam = st.tabs(["📁 Upload", "📷 Camera"])
     with tab_up:
-        uploaded = st.file_uploader("", type=["jpg","jpeg","png","webp"],
+        uploaded = st.file_uploader("", type=["jpg","jpeg","png","webp","jfif"],
                                     label_visibility="collapsed")
     with tab_cam:
         camera = st.camera_input("")
@@ -171,6 +177,7 @@ with col_input:
 
     if img_source:
         image = Image.open(img_source)
+        image = ImageOps.exif_transpose(image)
         st.image(image, use_container_width=True)
 
     if st.button("🔬 Try it now", type="primary", use_container_width=True):
@@ -179,6 +186,7 @@ with col_input:
         else:
             with st.spinner("Analysing..."):
                 image = Image.open(img_source)
+                image = ImageOps.exif_transpose(image)
                 p1 = predict(m1, image)
                 p2 = predict(m2, image)
                 p4 = predict(m4, image)
