@@ -156,7 +156,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-col_results, col_input = st.columns([2, 1])
+col_input, col_results = st.columns([1, 2])
 
 with col_input:
     st.markdown("#### 📸 Image of the plant")
