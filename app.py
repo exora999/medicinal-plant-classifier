@@ -160,7 +160,6 @@ st.markdown("""
       transform: translateY(-2px) !important;
       box-shadow: 0 10px 20px -5px rgba(22, 163, 74, 0.45) !important;
   }
-  /* زر الخطأ بلون أحمر احترافي */
   .wrong-btn button {
       background: rgba(153, 27, 27, 0.4) !important;
       border: 1px solid rgba(239, 68, 68, 0.5) !important;
