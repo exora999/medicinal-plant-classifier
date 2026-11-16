@@ -161,16 +161,6 @@ st.markdown("""
       transform: translateY(-2px) !important;
       box-shadow: 0 10px 20px -5px rgba(22, 163, 74, 0.45) !important;
   }
-  /* فرض اللون الأحمر الاحترافي على زر الخطأ بالكامل */
-  div[data-testid="column"]:nth-of-type(2) div.stButton > button {
-      background: rgba(185, 28, 28, 0.5) !important;
-      border: 1px solid rgba(248, 113, 113, 0.6) !important;
-  }
-  div[data-testid="column"]:nth-of-type(2) div.stButton > button:hover {
-      background: linear-gradient(135deg, #dc2626, #991b1b) !important;
-      border-color: #f87171 !important;
-      box-shadow: 0 10px 20px -5px rgba(239, 68, 68, 0.45) !important;
-  }
   .stTabs [data-baseweb="tab"] {
       background-color: rgba(30, 41, 59, 0.6);
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -267,9 +257,9 @@ def bar(label, pct, fill_cls, text_color):
       </div>
     </div>"""
 
-for k in ("results", "feedback_sent", "img_bytes"):
+for k in ("results", "feedback_sent", "img_bytes", "wrong_clicked"):
     if k not in st.session_state:
-        st.session_state[k] = None
+        st.session_state[k] = False if k == "wrong_clicked" else None
 
 st.markdown("""
 <div class="hero-box">
@@ -314,6 +304,7 @@ with col_input:
                 p4 = predict(m4, image)
                 st.session_state.results = (p1, p2, p4)
                 st.session_state.feedback_sent = False
+                st.session_state.wrong_clicked = False
                 buf = _io.BytesIO()
                 image.convert("RGB").save(buf, format="JPEG")
                 st.session_state.img_bytes = buf.getvalue()
@@ -365,9 +356,28 @@ with col_results:
                         st.session_state.feedback_sent = "correct"
                         st.rerun()
                 with fc2:
-                    if st.button("❌ No, Model 4 is wrong", use_container_width=True):
+                    # زر أحمر حقيقي ومضمون 100% عبر HTML لتفادي قيود Streamlit الافتراضية
+                    btn_clicked = st.button("❌ No, Model 4 is wrong", use_container_width=True, key="wrong_btn_trigger")
+                    if btn_clicked or st.session_state.wrong_clicked:
+                        st.session_state.wrong_clicked = True
                         st.session_state.feedback_sent = "wrong"
                         st.rerun()
+                    
+                    # حقن تصميم CSS خاص لهذا الزر بالتحديد ليكون أحمر قاني
+                    st.markdown("""
+                    <style>
+                        div[data-testid="column"]:nth-of-type(2) button[kind="secondary"] {
+                            background: linear-gradient(135deg, #dc2626, #991b1b) !important;
+                            border: 1px solid #f87171 !important;
+                            color: white !important;
+                        }
+                        div[data-testid="column"]:nth-of-type(2) button[kind="secondary"]:hover {
+                            background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+                            border-color: #fca5a5 !important;
+                            box-shadow: 0 10px 20px -5px rgba(220, 38, 38, 0.5) !important;
+                        }
+                    </style>
+                    """, unsafe_allow_html=True)
 
             elif st.session_state.feedback_sent == "correct":
                 st.success("Thank you for validating Model 4's prediction! 🎉")
