@@ -169,7 +169,7 @@ st.markdown("""
       font-weight: 600;
   }
   .stTabs [aria-selected="true"] {
-      background-color: rgba(222, 20, 23) !important;
+      background-color: rgba(22, 163, 74, 0.45) !important;
       border-color: #4ade80 !important;
       color: #ffffff !important;
   }
