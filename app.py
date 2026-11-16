@@ -153,7 +153,6 @@ st.markdown("""
       color: #ffffff !important;
       padding: 10px 18px !important;
       transition: all 0.25s ease !important;
-      width: 100% !important;
   }
   .stButton>button:hover {
       background: linear-gradient(135deg, #16a34a, #15803d) !important;
@@ -257,9 +256,9 @@ def bar(label, pct, fill_cls, text_color):
       </div>
     </div>"""
 
-for k in ("results", "feedback_sent", "img_bytes", "wrong_clicked"):
+for k in ("results", "feedback_sent", "img_bytes"):
     if k not in st.session_state:
-        st.session_state[k] = False if k == "wrong_clicked" else None
+        st.session_state[k] = None
 
 st.markdown("""
 <div class="hero-box">
@@ -304,7 +303,6 @@ with col_input:
                 p4 = predict(m4, image)
                 st.session_state.results = (p1, p2, p4)
                 st.session_state.feedback_sent = False
-                st.session_state.wrong_clicked = False
                 buf = _io.BytesIO()
                 image.convert("RGB").save(buf, format="JPEG")
                 st.session_state.img_bytes = buf.getvalue()
@@ -356,28 +354,9 @@ with col_results:
                         st.session_state.feedback_sent = "correct"
                         st.rerun()
                 with fc2:
-                    # زر أحمر حقيقي ومضمون 100% عبر HTML لتفادي قيود Streamlit الافتراضية
-                    btn_clicked = st.button("❌ No, Model 4 is wrong", use_container_width=True, key="wrong_btn_trigger")
-                    if btn_clicked or st.session_state.wrong_clicked:
-                        st.session_state.wrong_clicked = True
+                    if st.button("❌ No, Model 4 is wrong", use_container_width=True):
                         st.session_state.feedback_sent = "wrong"
                         st.rerun()
-                    
-                    # حقن تصميم CSS خاص لهذا الزر بالتحديد ليكون أحمر قاني
-                    st.markdown("""
-                    <style>
-                        div[data-testid="column"]:nth-of-type(2) button[kind="secondary"] {
-                            background: linear-gradient(135deg, #dc2626, #991b1b) !important;
-                            border: 1px solid #f87171 !important;
-                            color: white !important;
-                        }
-                        div[data-testid="column"]:nth-of-type(2) button[kind="secondary"]:hover {
-                            background: linear-gradient(135deg, #ef4444, #dc2626) !important;
-                            border-color: #fca5a5 !important;
-                            box-shadow: 0 10px 20px -5px rgba(220, 38, 38, 0.5) !important;
-                        }
-                    </style>
-                    """, unsafe_allow_html=True)
 
             elif st.session_state.feedback_sent == "correct":
                 st.success("Thank you for validating Model 4's prediction! 🎉")
@@ -417,6 +396,6 @@ st.markdown("""
 <div style="text-align:center;font-size:.85rem;color:#94a3b8;margin-top:40px;
             border-top:1px solid rgba(255,255,255,0.08);padding-top:18px;">
   ⚠️ <b>Academic & Educational Project</b> — Do NOT use this tool for medical diagnosis or consumption decisions.<br>
-  <b>Hamza Oulbayyad & Rida Bargach</b> • Dataset: Plants For A Future (pfaf.org) • <b>Version 1.1</b>
+  <b>Hamza Oulbayyad & Rida Bargach</b> • Dataset: Plants For A Future (pfaf.org)• <b>Version 1.1</b>
 </div>
 """, unsafe_allow_html=True)
