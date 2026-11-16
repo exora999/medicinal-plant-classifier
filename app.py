@@ -153,6 +153,7 @@ st.markdown("""
       color: #ffffff !important;
       padding: 10px 18px !important;
       transition: all 0.25s ease !important;
+      width: 100% !important;
   }
   .stButton>button:hover {
       background: linear-gradient(135deg, #16a34a, #15803d) !important;
@@ -160,22 +161,12 @@ st.markdown("""
       transform: translateY(-2px) !important;
       box-shadow: 0 10px 20px -5px rgba(22, 163, 74, 0.45) !important;
   }
-  /* تنسيق زر الإجابة الصحيحة */
-  .correct-btn button {
-      background: rgba(22, 163, 74, 0.35) !important;
-      border: 1px solid rgba(74, 222, 128, 0.45) !important;
+  /* فرض اللون الأحمر الاحترافي على زر الخطأ بالكامل */
+  div[data-testid="column"]:nth-of-type(2) div.stButton > button {
+      background: rgba(185, 28, 28, 0.5) !important;
+      border: 1px solid rgba(248, 113, 113, 0.6) !important;
   }
-  .correct-btn button:hover {
-      background: linear-gradient(135deg, #16a34a, #15803d) !important;
-      border-color: #4ade80 !important;
-      box-shadow: 0 10px 20px -5px rgba(22, 163, 74, 0.45) !important;
-  }
-  /* تنسيق زر الخطأ باللون الأحمر الاحترافي */
-  .wrong-btn button {
-      background: red !important;
-      border: 1px solid rgba(248, 113, 113, 0.55) !important;
-  }
-  .wrong-btn button:hover {
+  div[data-testid="column"]:nth-of-type(2) div.stButton > button:hover {
       background: linear-gradient(135deg, #dc2626, #991b1b) !important;
       border-color: #f87171 !important;
       box-shadow: 0 10px 20px -5px rgba(239, 68, 68, 0.45) !important;
@@ -370,17 +361,13 @@ with col_results:
             if not st.session_state.feedback_sent:
                 fc1, fc2 = st.columns(2, gap="medium")
                 with fc1:
-                    st.markdown('<div class="correct-btn">', unsafe_allow_html=True)
                     if st.button("✅ Yes, Model 4 is correct", use_container_width=True):
                         st.session_state.feedback_sent = "correct"
                         st.rerun()
-                    st.markdown('</div>', unsafe_allow_html=True)
                 with fc2:
-                    st.markdown('<div class="wrong-btn">', unsafe_allow_html=True)
                     if st.button("❌ No, Model 4 is wrong", use_container_width=True):
                         st.session_state.feedback_sent = "wrong"
                         st.rerun()
-                    st.markdown('</div>', unsafe_allow_html=True)
 
             elif st.session_state.feedback_sent == "correct":
                 st.success("Thank you for validating Model 4's prediction! 🎉")
