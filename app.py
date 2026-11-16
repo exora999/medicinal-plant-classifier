@@ -153,12 +153,23 @@ st.markdown("""
       color: #ffffff !important;
       padding: 10px 18px !important;
       transition: all 0.25s ease !important;
+      width: 100% !important;
   }
   .stButton>button:hover {
       background: linear-gradient(135deg, #16a34a, #15803d) !important;
       border-color: #4ade80 !important;
       transform: translateY(-2px) !important;
       box-shadow: 0 10px 20px -5px rgba(22, 163, 74, 0.45) !important;
+  }
+  .st-key-wrong_btn_trigger button {
+      background: linear-gradient(135deg, #dc2626, #991b1b) !important;
+      border: 1px solid #f87171 !important;
+      color: #ffffff !important;
+  }
+  .st-key-wrong_btn_trigger button:hover {
+      background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+      border-color: #fca5a5 !important;
+      box-shadow: 0 10px 20px -5px rgba(220, 38, 38, 0.55) !important;
   }
   .stTabs [data-baseweb="tab"] {
       background-color: rgba(30, 41, 59, 0.6);
@@ -288,10 +299,10 @@ with col_input:
     if img_source:
         image = Image.open(img_source)
         image = ImageOps.exif_transpose(image)
-        st.image(image, use_container_width=True)
+        st.image(image, width="stretch")
 
     st.markdown("<div style='height:8px;'></div>", unsafe_allow_html=True)
-    if st.button("🔬 Analyse Plant", type="primary", use_container_width=True):
+    if st.button("🔬 Analyse Plant", type="primary", width="stretch"):
         if img_source is None:
             st.warning("Please upload or capture a plant photo first.")
         else:
@@ -350,11 +361,11 @@ with col_results:
             if not st.session_state.feedback_sent:
                 fc1, fc2 = st.columns(2, gap="medium")
                 with fc1:
-                    if st.button("✅ Yes, Model 4 is correct", use_container_width=True):
+                    if st.button("✅ Yes, Model 4 is correct", width="stretch"):
                         st.session_state.feedback_sent = "correct"
                         st.rerun()
                 with fc2:
-                    if st.button("❌ No, Model 4 is wrong", use_container_width=True):
+                    if st.button("❌ No, Model 4 is wrong", width="stretch", key="wrong_btn_trigger"):
                         st.session_state.feedback_sent = "wrong"
                         st.rerun()
 
@@ -365,7 +376,7 @@ with col_results:
                 st.markdown("**Select the true classification for this plant:**")
                 fix = st.selectbox("Correct label", ["", "Medicinal", "Non-medicinal"],
                                    label_visibility="collapsed")
-                if fix and st.button("📨 Submit Correction for Model 4", use_container_width=True):
+                if fix and st.button("📨 Submit Correction for Model 4", width="stretch"):
                     p1, p2, p4 = st.session_state.results
                     lbl4, _, _, _ = label_v4(p4)
                     with st.spinner("Saving correction to dataset..."):
@@ -396,6 +407,6 @@ st.markdown("""
 <div style="text-align:center;font-size:.85rem;color:#94a3b8;margin-top:40px;
             border-top:1px solid rgba(255,255,255,0.08);padding-top:18px;">
   ⚠️ <b>Academic & Educational Project</b> — Do NOT use this tool for medical diagnosis or consumption decisions.<br>
-  <b>Hamza Oulbayyad & Rida Bargach</b> • Dataset: Plants For A Future (pfaf.org)• <b>Version 1.1</b>
+  <b>Hamza Oulbayyad & Rida Bargach</b> • Dataset: Plants For A Future (pfaf.org) • <b>Version 1.1</b>
 </div>
 """, unsafe_allow_html=True)
