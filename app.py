@@ -167,6 +167,79 @@ st.markdown("""
       transform: translateY(-2px) !important;
       box-shadow: 0 10px 20px -5px rgba(220, 38, 38, 0.55) !important;
   }
+  .st-key-analyse_btn button {
+      background: linear-gradient(90deg, #16a34a 0%, #22c55e 50%, #10b981 100%) !important;
+      border: 1.5px solid #4ade80 !important;
+      border-radius: 999px !important;
+      color: #ffffff !important;
+      font-size: 1.05rem !important;
+      font-weight: 800 !important;
+      padding: 14px 24px !important;
+      box-shadow: 0 8px 25px -4px rgba(34, 197, 94, 0.55) !important;
+      letter-spacing: 0.3px !important;
+  }
+  .st-key-analyse_btn button:hover {
+      background: linear-gradient(90deg, #15803d 0%, #16a34a 50%, #059669 100%) !important;
+      box-shadow: 0 12px 32px -2px rgba(74, 222, 128, 0.75) !important;
+      transform: translateY(-2px) !important;
+  }
+  [data-testid="stFileUploader"] section {
+      background: rgba(15, 23, 42, 0.65) !important;
+      border: 1.5px dashed rgba(148, 163, 184, 0.4) !important;
+      border-radius: 20px !important;
+      padding: 16px !important;
+      transition: border-color 0.25s ease, background 0.25s ease !important;
+  }
+  [data-testid="stFileUploader"] section:hover {
+      border-color: #4ade80 !important;
+      background: rgba(6, 78, 59, 0.25) !important;
+  }
+  [data-testid="stFileUploader"] section button {
+      background: rgba(30, 41, 59, 0.9) !important;
+      border: 1px solid rgba(74, 222, 128, 0.4) !important;
+      border-radius: 12px !important;
+      color: #4ade80 !important;
+      font-weight: 700 !important;
+  }
+  .preview-wrapper {
+      position: relative;
+      background: #ffffff;
+      border-radius: 22px;
+      padding: 10px;
+      margin-top: 12px;
+      margin-bottom: 14px;
+      box-shadow: 0 14px 32px -8px rgba(0, 0, 0, 0.6);
+      border: 2px solid rgba(74, 222, 128, 0.35);
+      overflow: hidden;
+  }
+  .preview-wrapper img {
+      width: 100%;
+      border-radius: 14px;
+      display: block;
+      object-fit: contain;
+      max-height: 290px;
+  }
+  .ready-pill {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: rgba(220, 252, 231, 0.95);
+      color: #15803d;
+      border: 1px solid #86efac;
+      border-radius: 999px;
+      padding: 5px 14px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+  }
+  .stTabs [data-baseweb="tab-list"] {
+      gap: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 6px;
+  }
   .stTabs [data-baseweb="tab"] {
       background-color: rgba(30, 41, 59, 0.6);
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -176,7 +249,7 @@ st.markdown("""
       font-weight: 600;
   }
   .stTabs [aria-selected="true"] {
-      background-color: rgba(22, 163, 74, 0.25) !important;
+      background: linear-gradient(135deg, rgba(22, 163, 74, 0.35), rgba(6, 78, 59, 0.6)) !important;
       border-color: #4ade80 !important;
       color: #ffffff !important;
   }
@@ -295,10 +368,18 @@ with col_input:
     if img_source:
         image = Image.open(img_source)
         image = ImageOps.exif_transpose(image)
-        st.image(image, width="stretch")
+        prev_buf = _io.BytesIO()
+        image.convert("RGB").save(prev_buf, format="JPEG", quality=90)
+        prev_b64 = base64.b64encode(prev_buf.getvalue()).decode("utf-8")
+        st.markdown(f"""
+        <div class="preview-wrapper">
+          <div class="ready-pill">✅ Image Ready</div>
+          <img src="data:image/jpeg;base64,{prev_b64}" alt="Plant Preview" />
+        </div>
+        """, unsafe_allow_html=True)
 
-    st.markdown("<div style='height:8px;'></div>", unsafe_allow_html=True)
-    if st.button("🔬 Analyse Plant", type="primary", width="stretch"):
+    st.markdown("<div style='height:4px;'></div>", unsafe_allow_html=True)
+    if st.button("📊  |  Analyse Plant  ➔", key="analyse_btn", width="stretch"):
         if img_source is None:
             st.warning("Please upload or capture a plant photo first.")
         else:
