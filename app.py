@@ -172,7 +172,7 @@ st.markdown("""
   }
   /* تنسيق زر الخطأ باللون الأحمر الاحترافي */
   .wrong-btn button {
-      background: rgba(185, 28, 28, 0.45) !important;
+      background: red !important;
       border: 1px solid rgba(248, 113, 113, 0.55) !important;
   }
   .wrong-btn button:hover {
