@@ -156,7 +156,7 @@ st.markdown("""
   }
   .stButton>button:hover {
       background: linear-gradient(135deg, #16a34a, #15803d) !important;
-      border-color: #de1417 !important;
+      border-color: #4ade80 !important;
       transform: translateY(-2px) !important;
       box-shadow: 0 10px 20px -5px rgba(22, 163, 74, 0.45) !important;
   }
@@ -169,7 +169,7 @@ st.markdown("""
       font-weight: 600;
   }
   .stTabs [aria-selected="true"] {
-      background-color: rgba(22, 163, 74, 0.25) !important;
+      background-color: rgba(222, 20, 23) !important;
       border-color: #4ade80 !important;
       color: #ffffff !important;
   }
