@@ -161,14 +161,10 @@ st.markdown("""
       transform: translateY(-2px) !important;
       box-shadow: 0 10px 20px -5px rgba(22, 163, 74, 0.45) !important;
   }
-  .st-key-wrong_btn_trigger button {
-      background: linear-gradient(135deg, #dc2626, #991b1b) !important;
-      border: 1px solid #f87171 !important;
-      color: #ffffff !important;
-  }
   .st-key-wrong_btn_trigger button:hover {
-      background: linear-gradient(135deg, #ef4444, #dc2626) !important;
-      border-color: #fca5a5 !important;
+      background: linear-gradient(135deg, #dc2626, #991b1b) !important;
+      border-color: #f87171 !important;
+      transform: translateY(-2px) !important;
       box-shadow: 0 10px 20px -5px rgba(220, 38, 38, 0.55) !important;
   }
   .stTabs [data-baseweb="tab"] {
