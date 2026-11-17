@@ -14,7 +14,7 @@ from PIL import Image, ImageOps
 from tensorflow import keras
 
 st.set_page_config(
-    page_title="Medicinal Plant Classifier — Hamza Oulbayyad ",
+    page_title="Medicinal Plant Classifier — Hamza Oulbayyad & Rida Bargach",
     page_icon="🌿",
     layout="wide"
 )
@@ -1293,6 +1293,6 @@ st.markdown(f"""
 <div dir="{page_dir}" style="text-align:center;font-size:.85rem;color:#94a3b8;margin-top:40px;
             border-top:1px solid rgba(255,255,255,0.08);padding-top:18px;">
   {tr("academic")}<br>
-  <b>Hamza Oulbayyad </b> • {tr("dataset")} • <b>Version 1.3</b>
+  <b>Hamza Oulbayyad & Rida Bargach</b> • {tr("dataset")} • <b>Version 1.3</b>
 </div>
 """, unsafe_allow_html=True)
