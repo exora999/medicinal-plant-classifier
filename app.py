@@ -6,6 +6,7 @@ import uuid
 import base64
 import io as _io
 import time
+from pathlib import Path
 import numpy as np
 import pandas as pd
 import streamlit as st
@@ -38,15 +39,28 @@ LANG = LANGUAGES[language_label]
 def tr(key):
     return TEXT[LANG].get(key, TEXT["en"].get(key, key))
 
-@st.cache_data(show_spinner=False)
+@st.cache_data(ttl=86400, show_spinner=False)
+def _translate_cached(value: str, target: str) -> str:
+    """Translate one botanical text value. Errors are raised, never silently cached."""
+    from deep_translator import GoogleTranslator
+    translated = GoogleTranslator(source="auto", target=target).translate(value[:4500])
+    if not translated:
+        raise RuntimeError("The translation service returned an empty result.")
+    return translated
+
+
 def translate_botanical_text(value, target):
-    """Translate descriptive database text; keep Latin scientific and chemical names unchanged."""
+    """Translate descriptive text and retain the original only if translation fails."""
     if value is None or not str(value).strip() or target == "en":
         return value
     try:
-        from deep_translator import GoogleTranslator
-        return GoogleTranslator(source="auto", target=target).translate(str(value)[:4500]) or value
-    except Exception:
+        return _translate_cached(str(value), target)
+    except Exception as exc:
+        # Keep the information visible, but report the translation failure in the UI.
+        errors = st.session_state.setdefault("translation_errors", [])
+        message = str(exc).strip() or exc.__class__.__name__
+        if message not in errors:
+            errors.append(message)
         return value
 
 if LANG == "ar":
@@ -324,12 +338,13 @@ st.markdown("""
       position: relative;
       min-height: 92px;
       height: calc(100% - 12px);
-      background: linear-gradient(145deg, rgba(30, 55, 58, .82), rgba(15, 23, 42, .78));
-      border: 1px solid rgba(74, 222, 128, .22);
+      background: linear-gradient(135deg, rgba(6, 78, 59, .92) 0%, rgba(13, 90, 82, .88) 52%, rgba(20, 48, 62, .94) 100%);
+      border: 1px solid rgba(74, 222, 128, .42);
       border-radius: 17px;
       padding: 17px 19px 18px 21px;
       margin: 7px 0 13px 0;
-      box-shadow: 0 8px 22px rgba(0, 0, 0, .16), inset 0 1px 0 rgba(255,255,255,.045);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, .24), inset 0 1px 0 rgba(255,255,255,.10);
+      backdrop-filter: blur(14px);
       overflow: hidden;
       transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
   }
@@ -352,7 +367,7 @@ st.markdown("""
   .plant-info-title {
       display: inline-block;
       font-size: .74rem;
-      color: #86efac;
+      color: #a7f3d0;
       font-weight: 800;
       margin-bottom: 9px;
       letter-spacing: .045em;
@@ -361,7 +376,7 @@ st.markdown("""
   .plant-info-value {
       font-size: .97rem;
       line-height: 1.72;
-      color: #f1f5f9;
+      color: #ffffff;
       overflow-wrap: anywhere;
       white-space: pre-wrap;
   }
@@ -434,15 +449,21 @@ def save_correction_to_github(wrong: str, correct: str, img_bytes: bytes):
 
 
 # ── PlantNet + PFAF + PubChem feature ─────────────────────────────────────────
-@st.cache_data
+@st.cache_data(show_spinner=False)
 def load_plant_database():
-    """Load the PFAF CSV if it exists; keep the classifier usable without it."""
-    try:
-        return pd.read_csv("pfaf_plants_small.csv")
-    except FileNotFoundError:
-        return pd.DataFrame()
-    except Exception:
-        return pd.DataFrame()
+    """Load the PFAF CSV from the app folder or current working directory."""
+    candidates = [
+        Path(__file__).resolve().parent / "pfaf_plants_small.csv",
+        Path.cwd() / "pfaf_plants_small.csv",
+    ]
+    for csv_path in candidates:
+        if csv_path.is_file():
+            try:
+                frame = pd.read_csv(csv_path)
+                return frame
+            except Exception as exc:
+                st.warning(f"Could not read {csv_path.name}: {exc}")
+    return pd.DataFrame()
 
 
 def identify_plant(img_bytes: bytes, target_language: str = "en"):
@@ -497,24 +518,44 @@ def identify_plant(img_bytes: bytes, target_language: str = "en"):
 
 
 def find_plant_in_database(scientific_name: str):
-    """Find the identified species in the PFAF CSV."""
+    """Match PlantNet's scientific name against common PFAF CSV header variants."""
     if not scientific_name or df_plants.empty:
         return None
-    if "Scientific Name" not in df_plants.columns:
+
+    def norm(value):
+        return "".join(ch.lower() for ch in str(value) if ch.isalnum())
+
+    name_column = None
+    for column in df_plants.columns:
+        normalized = norm(column)
+        if normalized in {"scientificname", "botanicalname", "latinname", "species"}:
+            name_column = column
+            break
+    if name_column is None:
         return None
 
-    names = df_plants["Scientific Name"].fillna("").astype(str).str.strip()
-    target = scientific_name.strip().casefold()
+    names = df_plants[name_column].fillna("").astype(str).str.strip()
+    target = norm(scientific_name)
+    target_tokens = str(scientific_name).casefold().split()
+    target_binomial = " ".join(target_tokens[:2])
 
-    # Prefer a full scientific-name match; fall back to the genus if necessary.
-    exact = df_plants[names.str.casefold() == target]
+    normalized_names = names.map(norm)
+    exact = df_plants[normalized_names == target]
     if not exact.empty:
         return exact.iloc[0].to_dict()
 
-    genus = target.split()[0]
-    partial = df_plants[names.str.casefold().str.startswith(genus)]
-    if not partial.empty:
-        return partial.iloc[0].to_dict()
+    # Match the first two scientific-name words (genus + species), ignoring author names.
+    for idx, candidate in names.items():
+        candidate_binomial = " ".join(str(candidate).casefold().split()[:2])
+        if candidate_binomial == target_binomial:
+            return df_plants.loc[idx].to_dict()
+
+    # Last-resort genus match, as in the original implementation.
+    genus = target_tokens[0] if target_tokens else ""
+    if genus:
+        partial = df_plants[normalized_names.str.startswith(norm(genus))]
+        if not partial.empty:
+            return partial.iloc[0].to_dict()
     return None
 
 
@@ -636,7 +677,23 @@ def render_plant_information(plant_data):
                 )
             card_index += 1
     elif plant_data.get("scientific_name"):
-        st.info(tr("not_db"))
+        if df_plants.empty:
+            st.markdown(
+                f'<div dir="{text_dir}" class="plant-info-card">'
+                f'<div class="plant-info-title">{html.escape(tr("plant_info"))}</div>'
+                f'<div class="plant-info-value">The CSV file pfaf_plants_small.csv was not found beside the Python app, or it could not be read. Place the CSV in the same folder as this script.</div>'
+                f'</div>',
+                unsafe_allow_html=True,
+            )
+        else:
+            st.info(tr("not_db"))
+
+    if LANG != "en" and st.session_state.get("translation_errors"):
+        st.warning(
+            "Some plant descriptions could not be translated. Check your internet connection "
+            "and install/update the translation package with: pip install -U deep-translator. "
+            "The original text is shown instead."
+        )
 
     chemicals = plant_data.get("chemicals") or []
     if chemicals:
@@ -694,6 +751,8 @@ def bar(label, pct, fill_cls, text_color):
         </div>
       </div>
     </div>"""
+
+st.session_state["translation_errors"] = []
 
 for k in ("results", "feedback_sent", "img_bytes", "plant_data"):
     if k not in st.session_state:
