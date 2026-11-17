@@ -876,18 +876,18 @@ def compute_hybrid_prediction(p_visual: float, plant_data: dict):
     match_type = plant_data.get("match_type")
     rating = extract_pfaf_rating(database_row)
 
-    if rating is not None and match_type == "exact" and confidence >= 60.0:
+    if rating is not None and match_type == "exact" and confidence >= 70.0:
         rating_prob_map = {
-            0: 0.05,
-            1: 0.15,
-            2: 0.32,
-            3: 0.78,
-            4: 0.90,
-            5: 0.97,
+            0: 0.10,
+            1: 0.58,
+            2: 0.72,
+            3: 0.85,
+            4: 0.93,
+            5: 0.98,
         }
         rounded_rating = int(round(rating))
-        p_pfaf = rating_prob_map.get(rounded_rating, min(max(rating / 5.0, 0.05), 0.97))
-        alpha = 0.45
+        p_pfaf = rating_prob_map.get(rounded_rating, min(max(rating / 5.0, 0.10), 0.98))
+        alpha = 0.20 if (p_visual >= 0.85 or p_visual <= 0.15) else 0.35
         p_hybrid = (1.0 - alpha) * p_visual + alpha * p_pfaf
         return float(p_hybrid), "hybrid", rounded_rating
 
@@ -1303,6 +1303,6 @@ st.markdown(f"""
 <div dir="{page_dir}" style="text-align:center;font-size:.85rem;color:#94a3b8;margin-top:40px;
             border-top:1px solid rgba(255,255,255,0.08);padding-top:18px;">
   {tr("academic")}<br>
-  <b>Hamza Oulbayyad & Rida Bargach</b> • {tr("dataset")} • <b>Version 1.5</b>
+  <b>Hamza Oulbayyad & Rida Bargach</b> • {tr("dataset")} • <b>Version 1.6</b>
 </div>
 """, unsafe_allow_html=True)
