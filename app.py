@@ -42,7 +42,7 @@ TEXT = {
         "identifying": "🌿 Identifying plant with PlantNet...",
         "fetching": "🧪 Retrieving chemical compounds...",
         "translating": "🌐 Translating botanical information...",
-        "running": "Running inference across all 3 models...",
+        "running": "Running Model 4 inference...",
         "plant_id": "Plant Identification",
         "scientific": "Scientific Name",
         "common": "Common Name",
@@ -61,14 +61,12 @@ TEXT = {
         "chem_note": "Chemical compound names are kept in their standard scientific form.",
         "no_chem": "No chemical compound names were returned by PubChem.",
         "plantnet_error": "PlantNet identification was unavailable: ",
-        "baseline": "Baseline Architecture",
-        "intermediate": "Intermediate Architecture",
         "strongweak": "Hybrid Vision + PFAF Decision",
         "primary": "⭐ Primary Model",
         "source_hybrid": "🧬 Vision + PFAF ({rating}/5)",
         "source_vision": "👁️ Visual CNN Only",
         "evaluate": "🎯 Evaluate Primary Model (Model 4)",
-        "evaluate_help": "Ignore Models 1 & 2 above — is <b>Model 4's</b> classification accurate for this plant?",
+        "evaluate_help": "Is <b>Model 4's</b> classification accurate for this plant?",
         "yes": "✅ Yes, Model 4 is correct",
         "no": "❌ No, Model 4 is wrong",
         "thanks": "Thank you for validating Model 4's prediction! 🎉",
@@ -81,19 +79,12 @@ TEXT = {
         "saved": "Correction saved! Thank you for helping improve Model 4 🎉",
         "save_error": "Error saving feedback: ",
         "ready": "Ready to Analyse",
-        "ready_help": "Upload a plant photo on the right and click <b>Analyse Plant</b>",
+        "ready_help": "Upload a plant photo on the side and click <b>Analyse Plant</b>",
         "academic": "⚠️ <b>Academic & Educational Project</b> — Do NOT use this tool for medical diagnosis or consumption decisions.",
         "dataset": "Dataset: Plants For A Future (pfaf.org)",
-        "model1": "Model 1",
-        "model2": "Model 2",
         "model4": "Model 4",
-        "basev1": "Baseline v1",
-        "midv2": "Intermediate v2",
-        "uncertain": "🟡 Uncertain",
         "important": "🟢 Significant medical use",
-        "almost": "🔴 Almost no medical use",
-        "med_result": "🟢 Medicinal",
-        "nonmed_result": "🔴 Non-medicinal"
+        "almost": "🔴 Almost no medical use"
     },
     "fr": {
         "lang_label": "Langue d'affichage",
@@ -111,7 +102,7 @@ TEXT = {
         "identifying": "🌿 Identification avec PlantNet...",
         "fetching": "🧪 Récupération des composés chimiques...",
         "translating": "🌐 Traduction des informations botaniques...",
-        "running": "Exécution des prédictions sur les 3 modèles...",
+        "running": "Exécution de la prédiction du Modèle 4...",
         "plant_id": "Identification de la plante",
         "scientific": "Nom scientifique",
         "common": "Nom commun",
@@ -130,14 +121,12 @@ TEXT = {
         "chem_note": "Les noms des composés chimiques sont conservés sous leur forme scientifique normalisée.",
         "no_chem": "Aucun nom de composé chimique n’a été fourni par PubChem.",
         "plantnet_error": "L’identification PlantNet est indisponible : ",
-        "baseline": "Architecture de base",
-        "intermediate": "Architecture intermédiaire",
         "strongweak": "Décision Hybride Vision + PFAF",
         "primary": "⭐ Modèle principal",
         "source_hybrid": "🧬 Vision + PFAF ({rating}/5)",
         "source_vision": "👁️ Vision CNN uniquement",
         "evaluate": "🎯 Évaluer le modèle principal (Modèle 4)",
-        "evaluate_help": "Ignorez les modèles 1 et 2 — la classification du <b>Modèle 4</b> est-elle correcte ?",
+        "evaluate_help": "La classification du <b>Modèle 4</b> est-elle correcte pour cette plante ?",
         "yes": "✅ Oui, le Modèle 4 est correct",
         "no": "❌ Non, le Modèle 4 est incorrect",
         "thanks": "Merci d’avoir validé la prédiction du Modèle 4 ! 🎉",
@@ -150,19 +139,12 @@ TEXT = {
         "saved": "Correction enregistrée ! Merci de contribuer à améliorer le Modèle 4 🎉",
         "save_error": "Erreur lors de l’enregistrement : ",
         "ready": "Prêt à analyser",
-        "ready_help": "Importez une photo de plante à droite puis cliquez sur <b>Analyser la plante</b>",
+        "ready_help": "Importez une photo de plante puis cliquez sur <b>Analyser la plante</b>",
         "academic": "⚠️ <b>Projet académique et éducatif</b> — N’utilisez PAS cet outil pour un diagnostic médical ou une décision de consommation.",
         "dataset": "Base de données : Plants For A Future (pfaf.org)",
-        "model1": "Modèle 1",
-        "model2": "Modèle 2",
         "model4": "Modèle 4",
-        "basev1": "Base v1",
-        "midv2": "Intermédiaire v2",
-        "uncertain": "🟡 Incertain",
         "important": "🟢 Usage médicinal important",
-        "almost": "🔴 Usage médicinal quasi inexistant",
-        "med_result": "🟢 Médicinale",
-        "nonmed_result": "🔴 Non médicinale"
+        "almost": "🔴 Usage médicinal quasi inexistant"
     },
     "ar": {
         "lang_label": "لغة العرض",
@@ -180,7 +162,7 @@ TEXT = {
         "identifying": "🌿 جارٍ التعرف على النبتة باستخدام PlantNet...",
         "fetching": "🧪 جارٍ جلب المركبات الكيميائية...",
         "translating": "🌐 جارٍ ترجمة المعلومات النباتية...",
-        "running": "جارٍ تشغيل النماذج الثلاثة...",
+        "running": "جارٍ تشغيل النموذج 4...",
         "plant_id": "التعرف على النبتة",
         "scientific": "الاسم العلمي",
         "common": "الاسم الشائع",
@@ -199,14 +181,12 @@ TEXT = {
         "chem_note": "تُترك أسماء المركبات الكيميائية بصيغتها العلمية القياسية حفاظاً على دقتها.",
         "no_chem": "لم يُرجع PubChem أسماء للمركبات الكيميائية.",
         "plantnet_error": "خدمة PlantNet غير متاحة حالياً: ",
-        "baseline": "البنية الأساسية",
-        "intermediate": "البنية المتوسطة",
         "strongweak": "قرار هجين: الرؤية البصرية + PFAF",
         "primary": "⭐ النموذج الرئيسي",
         "source_hybrid": "🧬 الرؤية البصرية + PFAF ({rating}/5)",
         "source_vision": "👁️ الرؤية البصرية فقط",
         "evaluate": "🎯 تقييم النموذج الرئيسي (النموذج 4)",
-        "evaluate_help": "تجاهل النموذجين 1 و2 — هل تصنيف <b>النموذج 4</b> صحيح لهذه النبتة؟",
+        "evaluate_help": "هل تصنيف <b>النموذج 4</b> صحيح لهذه النبتة؟",
         "yes": "✅ نعم، تصنيف النموذج 4 صحيح",
         "no": "❌ لا، تصنيف النموذج 4 غير صحيح",
         "thanks": "شكراً لتأكيد نتيجة النموذج 4! 🎉",
@@ -222,16 +202,9 @@ TEXT = {
         "ready_help": "ارفع صورة النبتة من الجهة الجانبية ثم اضغط على <b>تحليل النبتة</b>",
         "academic": "⚠️ <b>مشروع أكاديمي وتعليمي</b> — لا تستخدم هذه الأداة للتشخيص الطبي أو لاتخاذ قرارات الاستهلاك.",
         "dataset": "قاعدة البيانات: Plants For A Future (pfaf.org)",
-        "model1": "النموذج 1",
-        "model2": "النموذج 2",
         "model4": "النموذج 4",
-        "basev1": "الأساسي v1",
-        "midv2": "المتوسط v2",
-        "uncertain": "🟡 غير مؤكد",
         "important": "🟢 استخدام طبي مهم",
-        "almost": "🔴 استخدام طبي شبه منعدم",
-        "med_result": "🟢 طبية",
-        "nonmed_result": "🔴 غير طبية"
+        "almost": "🔴 استخدام طبي شبه منعدم"
     }
 }
 
@@ -309,29 +282,13 @@ st.markdown("""
       color: #ffffff;
       margin-top: 10px;
   }
-  .model-card {
-      background: rgba(30, 41, 59, 0.55);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 22px;
-      padding: 24px 18px;
-      text-align: center;
-      height: 100%;
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-  }
-  .model-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(74, 222, 128, 0.3);
-      box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.5);
-  }
   .model-card-primary {
-      background: linear-gradient(180deg, rgba(6, 78, 59, 0.45) 0%, rgba(15, 23, 42, 0.8) 100%);
+      background: linear-gradient(180deg, rgba(6, 78, 59, 0.48) 0%, rgba(15, 23, 42, 0.85) 100%);
       backdrop-filter: blur(12px);
       border: 1.5px solid #4ade80;
       border-radius: 22px;
-      padding: 24px 18px;
+      padding: 28px 24px;
       text-align: center;
-      height: 100%;
       box-shadow: 0 10px 30px -10px rgba(74, 222, 128, 0.25);
       transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
@@ -344,84 +301,80 @@ st.markdown("""
       background: rgba(74, 222, 128, 0.18);
       color: #4ade80;
       border: 1px solid rgba(74, 222, 128, 0.4);
-      font-size: 0.75rem;
+      font-size: 0.78rem;
       font-weight: 700;
-      padding: 3px 12px;
+      padding: 4px 14px;
       border-radius: 999px;
       margin-bottom: 10px;
       letter-spacing: 0.5px;
       text-transform: uppercase;
   }
-  .secondary-tag {
-      display: inline-block;
-      background: rgba(148, 163, 184, 0.15);
-      color: #94a3b8;
-      font-size: 0.75rem;
-      font-weight: 600;
-      padding: 3px 12px;
-      border-radius: 999px;
-      margin-bottom: 10px;
-  }
   .source-pill-hybrid {
       display: inline-block;
-      margin-top: 12px;
+      margin-top: 14px;
       background: rgba(16, 185, 129, 0.18);
       border: 1px solid rgba(52, 211, 153, 0.45);
       color: #6ee7b7;
-      font-size: 0.76rem;
+      font-size: 0.8rem;
       font-weight: 700;
-      padding: 4px 12px;
+      padding: 5px 14px;
       border-radius: 999px;
   }
   .source-pill-vision {
       display: inline-block;
-      margin-top: 12px;
+      margin-top: 14px;
       background: rgba(148, 163, 184, 0.14);
       border: 1px solid rgba(148, 163, 184, 0.3);
       color: #cbd5e1;
-      font-size: 0.76rem;
+      font-size: 0.8rem;
       font-weight: 700;
-      padding: 4px 12px;
+      padding: 5px 14px;
       border-radius: 999px;
   }
   .model-title {
-      font-size: 1.3rem;
+      font-size: 1.45rem;
       font-weight: 800;
       color: #f8fafc;
       margin-bottom: 4px;
   }
   .model-sub {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       color: #94a3b8;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
   }
-  .bar-wrap { margin: 10px 0 6px 0; }
-  .bar-label { font-size: 1.02rem; font-weight: 700; margin-bottom: 8px; }
+  .bar-wrap {
+      max-width: 540px;
+      margin: 10px auto 6px auto;
+  }
+  .bar-label {
+      font-size: 1.08rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+  }
   .bar-track {
-      background: rgba(15, 23, 42, 0.8);
+      background: rgba(15, 23, 42, 0.85);
       border-radius: 999px;
-      height: 24px;
+      height: 26px;
       width: 100%;
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.08);
       padding: 2px;
   }
   .bar-fill {
-      height: 18px;
+      height: 20px;
       border-radius: 999px;
       display: flex;
       align-items: center;
-      padding-right: 10px;
+      padding-right: 12px;
       justify-content: flex-end;
       color: white;
-      font-size: 0.82rem;
+      font-size: 0.86rem;
       font-weight: 800;
-      min-width: 50px;
+      min-width: 54px;
       transition: width 0.6s ease;
   }
   .green-fill { background: linear-gradient(90deg, #15803d, #22c55e, #4ade80); }
   .red-fill   { background: linear-gradient(90deg, #991b1b, #ef4444, #f87171); }
-  .amber-fill { background: linear-gradient(90deg, #b45309, #f59e0b, #fbbf24); }
   .feedback-box {
       background: rgba(30, 41, 59, 0.6);
       border: 1px solid rgba(74, 222, 128, 0.25);
@@ -1126,13 +1079,10 @@ def render_plant_information(plant_data):
         st.caption(tr("no_chem"))
 
 @st.cache_resource
-def load_models():
-    m1 = keras.models.load_model("plant_model_v1.keras")
-    m2 = keras.models.load_model("plant_model_v2.keras")
-    m4 = keras.models.load_model("plant_model_v4.keras")
-    return m1, m2, m4
+def load_model():
+    return keras.models.load_model("plant_model_v4.keras")
 
-m1, m2, m4 = load_models()
+m4 = load_model()
 df_plants = load_plant_database()
 
 def predict(model, img):
@@ -1141,13 +1091,6 @@ def predict(model, img):
     )
     p_non = float(model.predict(x, verbose=0)[0][0])
     return 1 - p_non
-
-def label_v1v2(p_med):
-    if p_med > 0.65:
-        return tr("med_result"), p_med, "green-fill", "#4ade80"
-    if p_med < 0.35:
-        return tr("nonmed_result"), 1 - p_med, "red-fill", "#f87171"
-    return tr("uncertain"), max(p_med, 1 - p_med), "amber-fill", "#fbbf24"
 
 def label_v4(p_med):
     if p_med >= 0.5:
@@ -1250,16 +1193,14 @@ with col_input:
             st.session_state.plant_data = plant_data
 
             with st.spinner(tr("running")):
-                p1 = predict(m1, image)
-                p2 = predict(m2, image)
                 p4_raw = predict(m4, image)
                 p4_final, m4_mode, pfaf_rating = compute_hybrid_prediction(p4_raw, plant_data)
-                st.session_state.results = (p1, p2, p4_final)
+                st.session_state.results = p4_final
                 st.session_state.m4_meta = (m4_mode, pfaf_rating)
                 st.session_state.feedback_sent = False
 
 with col_results:
-    if st.session_state.results:
+    if st.session_state.results is not None:
         if st.session_state.plant_data:
             render_plant_information(st.session_state.plant_data)
             if st.session_state.plant_data.get("plantnet_error"):
@@ -1269,36 +1210,24 @@ with col_results:
                 )
             st.markdown("<div style='height:14px;'></div>", unsafe_allow_html=True)
 
-        p1, p2, p4 = st.session_state.results
+        p4 = st.session_state.results
         m4_mode, pfaf_rating = st.session_state.m4_meta or ("vision", None)
-        c1, c2, c3 = st.columns(3, gap="medium")
+        lbl, conf, fill_cls, txt_col = label_v4(p4)
 
-        models_info = [
-            (c1, tr("model1"), tr("baseline"), tr("basev1"), p1, label_v1v2, False),
-            (c2, tr("model2"), tr("intermediate"), tr("midv2"), p2, label_v1v2, False),
-            (c3, tr("model4"), tr("strongweak"), tr("primary"), p4, label_v4, True),
-        ]
+        if m4_mode == "hybrid" and pfaf_rating is not None:
+            source_txt = tr("source_hybrid").format(rating=pfaf_rating)
+            source_html = f'<div class="source-pill-hybrid">{source_txt}</div>'
+        else:
+            source_html = f'<div class="source-pill-vision">{tr("source_vision")}</div>'
 
-        for col, model_name, model_sub, badge_txt, p_med, lbl_fn, is_primary in models_info:
-            lbl, conf, fill_cls, txt_col = lbl_fn(p_med)
-            card_cls = "model-card-primary" if is_primary else "model-card"
-            tag_cls = "primary-tag" if is_primary else "secondary-tag"
-            source_html = ""
-            if is_primary:
-                if m4_mode == "hybrid" and pfaf_rating is not None:
-                    source_txt = tr("source_hybrid").format(rating=pfaf_rating)
-                    source_html = f'<div class="source-pill-hybrid">{source_txt}</div>'
-                else:
-                    source_html = f'<div class="source-pill-vision">{tr("source_vision")}</div>'
-            with col:
-                st.markdown(f"""
-                <div class="{card_cls}" dir="{page_dir}">
-                  <span class="{tag_cls}">{badge_txt}</span>
-                  <div class="model-title">{model_name}</div>
-                  <div class="model-sub">{model_sub}</div>
-                  {bar(lbl, conf, fill_cls, txt_col)}
-                  {source_html}
-                </div>""", unsafe_allow_html=True)
+        st.markdown(f"""
+        <div class="model-card-primary" dir="{page_dir}">
+          <span class="primary-tag">{tr("primary")}</span>
+          <div class="model-title">{tr("model4")}</div>
+          <div class="model-sub">{tr("strongweak")}</div>
+          {bar(lbl, conf, fill_cls, txt_col)}
+          {source_html}
+        </div>""", unsafe_allow_html=True)
 
         st.markdown("<div style='height:18px;'></div>", unsafe_allow_html=True)
 
@@ -1334,7 +1263,6 @@ with col_results:
                     label_visibility="collapsed"
                 )
                 if fix and st.button(tr("submit"), width="stretch"):
-                    p1, p2, p4 = st.session_state.results
                     with st.spinner(tr("saving")):
                         try:
                             fix_for_dataset = "Medicinal" if fix == tr("medicinal") else "Non-medicinal"
@@ -1371,6 +1299,6 @@ st.markdown(f"""
 <div dir="{page_dir}" style="text-align:center;font-size:.85rem;color:#94a3b8;margin-top:40px;
             border-top:1px solid rgba(255,255,255,0.08);padding-top:18px;">
   {tr("academic")}<br>
-  <b>Hamza Oulbayyad & Rida Bargach</b> • {tr("dataset")} • <b>Version 1.3</b>
+  <b>Hamza Oulbayyad & Rida Bargach</b> • {tr("dataset")} • <b>Version 1.4</b>
 </div>
 """, unsafe_allow_html=True)
