@@ -813,7 +813,7 @@ def identify_plant(img_bytes: bytes, target_language: str = "en"):
 
 def find_plant_in_database(scientific_name: str):
     if not scientific_name or df_plants.empty:
-        return None
+        return None, None
 
     def norm(value):
         return "".join(ch.lower() for ch in str(value) if ch.isalnum())
@@ -828,7 +828,7 @@ def find_plant_in_database(scientific_name: str):
             name_column = column
             break
     if name_column is None:
-        return None
+        return None, None
 
     names = df_plants[name_column].fillna("").astype(str).str.strip()
     target = norm(scientific_name)
@@ -838,19 +838,19 @@ def find_plant_in_database(scientific_name: str):
     normalized_names = names.map(norm)
     exact = df_plants[normalized_names == target]
     if not exact.empty:
-        return exact.iloc[0].to_dict()
+        return exact.iloc[0].to_dict(), "exact"
 
     for idx, candidate in names.items():
         candidate_binomial = " ".join(str(candidate).casefold().split()[:2])
         if candidate_binomial == target_binomial:
-            return df_plants.loc[idx].to_dict()
+            return df_plants.loc[idx].to_dict(), "exact"
 
     genus = target_tokens[0] if target_tokens else ""
     if genus:
         partial = df_plants[normalized_names.str.startswith(norm(genus))]
         if not partial.empty:
-            return partial.iloc[0].to_dict()
-    return None
+            return partial.iloc[0].to_dict(), "genus"
+    return None, None
 
 def extract_pfaf_rating(database_row):
     if not database_row:
@@ -873,20 +873,21 @@ def compute_hybrid_prediction(p_visual: float, plant_data: dict):
         return p_visual, "vision", None
     confidence = float(plant_data.get("confidence") or 0.0)
     database_row = plant_data.get("database_row")
+    match_type = plant_data.get("match_type")
     rating = extract_pfaf_rating(database_row)
 
-    if rating is not None and confidence >= 35.0:
+    if rating is not None and match_type == "exact" and confidence >= 60.0:
         rating_prob_map = {
-            0: 0.04,
-            1: 0.22,
-            2: 0.68,
-            3: 0.84,
-            4: 0.94,
-            5: 0.99,
+            0: 0.05,
+            1: 0.15,
+            2: 0.32,
+            3: 0.78,
+            4: 0.90,
+            5: 0.97,
         }
         rounded_rating = int(round(rating))
-        p_pfaf = rating_prob_map.get(rounded_rating, min(max(rating / 5.0, 0.01), 0.99))
-        alpha = 0.80 if confidence >= 70.0 else (confidence / 100.0)
+        p_pfaf = rating_prob_map.get(rounded_rating, min(max(rating / 5.0, 0.05), 0.97))
+        alpha = 0.45
         p_hybrid = (1.0 - alpha) * p_visual + alpha * p_pfaf
         return float(p_hybrid), "hybrid", rounded_rating
 
@@ -1167,6 +1168,7 @@ with col_input:
                 "common_name": None,
                 "confidence": 0.0,
                 "database_row": None,
+                "match_type": None,
                 "chemicals": [],
                 "plantnet_error": None,
             }
@@ -1182,9 +1184,11 @@ with col_input:
                     plant_data["plantnet_error"] = str(error)
 
             if plant_data["scientific_name"]:
-                plant_data["database_row"] = find_plant_in_database(
+                db_row, match_type = find_plant_in_database(
                     plant_data["scientific_name"]
                 )
+                plant_data["database_row"] = db_row
+                plant_data["match_type"] = match_type
                 with st.spinner(tr("fetching")):
                     plant_data["chemicals"] = get_chemical_compounds(
                         plant_data["scientific_name"]
@@ -1299,6 +1303,6 @@ st.markdown(f"""
 <div dir="{page_dir}" style="text-align:center;font-size:.85rem;color:#94a3b8;margin-top:40px;
             border-top:1px solid rgba(255,255,255,0.08);padding-top:18px;">
   {tr("academic")}<br>
-  <b>Hamza Oulbayyad & Rida Bargach</b> • {tr("dataset")} • <b>Version 1.4</b>
+  <b>Hamza Oulbayyad & Rida Bargach</b> • {tr("dataset")} • <b>Version 1.5</b>
 </div>
 """, unsafe_allow_html=True)
