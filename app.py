@@ -40,23 +40,6 @@ def tr(key):
     return TEXT[LANG].get(key, TEXT["en"].get(key, key))
 
 
-with st.sidebar:
-    st.markdown("### 🌐 Translation")
-    st.caption(
-        "Choose a language above. Plant descriptions are translated when the "
-        "plant identification results are displayed."
-    )
-    if st.button("Test translation service", key="test_translation_service"):
-        try:
-            sample = _translate_cached("Medicinal properties and native habitat", LANG)
-            st.success(f"Translation service is working: {sample}")
-        except Exception as exc:
-            st.error(
-                "Translation service is not working. Install the package with "
-                "`pip install -U deep-translator`, check your internet connection, "
-                f"then restart Streamlit. Details: {exc}"
-            )
-
 @st.cache_data(ttl=86400, show_spinner=False)
 def _translate_cached(value: str, target: str) -> str:
     """Translate botanical descriptions; never cache failed translations."""
@@ -104,6 +87,23 @@ def translate_botanical_text(value, target):
         if error_text not in errors:
             errors.append(error_text)
         return value
+
+with st.sidebar:
+    st.markdown("### 🌐 Translation")
+    st.caption(
+        "Choose a language above. Plant descriptions are translated when the "
+        "plant identification results are displayed."
+    )
+    if st.button("Test translation service", key="test_translation_service"):
+        try:
+            sample = _translate_cached("Medicinal properties and native habitat", LANG)
+            st.success(f"Translation service is working: {sample}")
+        except Exception as exc:
+            st.error(
+                "Translation service is not working. Install the package with "
+                "`pip install -U deep-translator`, check your internet connection, "
+                f"then restart Streamlit. Details: {exc}"
+            )
 
 if LANG == "ar":
     st.markdown("<style>.stApp, .stApp * { direction: rtl; } .stButton button { direction: rtl; }</style>", unsafe_allow_html=True)
