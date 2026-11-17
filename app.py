@@ -18,6 +18,40 @@ st.set_page_config(
     layout="wide"
 )
 
+
+# -------------------- Language selection and translations --------------------
+LANGUAGES = {"English": "en", "Français": "fr", "العربية": "ar"}
+TEXT = {
+"en": {
+"hero":"Medicinal Plant Classifier", "subtitle":"Compare three deep learning architectures — powered by <b>Model 4</b>", "developed":"✨ Developed by:",
+"input":"📸 Input Plant Image", "upload_tab":"📁 Upload File", "camera_tab":"📷 Take Photo", "upload":"Upload plant image", "capture":"Capture plant photo", "ready_img":"✅ Image Ready", "analyse":"📊  |  Analyse Plant  ➔", "upload_first":"Please upload or capture a plant photo first.",
+"identifying":"🌿 Identifying plant with PlantNet...", "fetching":"🧪 Retrieving chemical compounds...", "running":"Running inference across all 3 models...", "plant_id":"🌿 Plant Identification", "scientific":"Scientific Name", "common":"Common Name", "confidence":"PlantNet Confidence", "not_found":"PlantNet could not identify this plant. Try a clearer photo.", "plant_info":"📋 Plant Information (PFAF)", "family":"🌱 Family", "rating":"⭐ Medicinal Rating (0–5)", "range":"🗺️ Native Range", "hazards":"⚠️ Known Hazards", "properties":"💊 Medicinal Properties", "summary":"📝 Summary", "not_db":"This plant was identified by PlantNet, but no matching entry was found in pfaf_plants_small.csv.", "chemicals":"🧪 Chemical Compounds (PubChem)", "no_chem":"No chemical compound names were returned by PubChem.", "plantnet_error":"PlantNet identification was unavailable: ",
+"baseline":"Baseline Architecture", "intermediate":"Intermediate Architecture", "strongweak":"Strong / Weak Medical Use", "primary":"⭐ Primary Model", "evaluate":"🎯 Evaluate Primary Model (Model 4)", "evaluate_help":"Ignore Models 1 & 2 above — is <b>Model 4's</b> classification accurate for this plant?", "yes":"✅ Yes, Model 4 is correct", "no":"❌ No, Model 4 is wrong", "thanks":"Thank you for validating Model 4's prediction! 🎉", "select_true":"Select the true classification for this plant:", "correct_label":"Correct label", "medicinal":"Medicinal", "nonmed":"Non-medicinal", "submit":"📨 Submit Correction for Model 4", "saving":"Saving correction to dataset...", "saved":"Correction saved! Thank you for helping improve Model 4 🎉", "save_error":"Error saving feedback: ", "ready":"Ready to Analyse", "ready_help":"Upload a plant photo on the right and click <b>Analyse Plant</b>", "academic":"⚠️ <b>Academic & Educational Project</b> — Do NOT use this tool for medical diagnosis or consumption decisions.", "dataset":"Dataset: Plants For A Future (pfaf.org)", "model1":"Model 1", "model2":"Model 2", "model4":"Model 4", "basev1":"Baseline v1", "midv2":"Intermediate v2", "uncertain":"🟡 Uncertain", "important":"🟢 Significant medical use", "almost":"🔴 Almost no medical use", "med_result":"🟢 Medicinal", "nonmed_result":"🔴 Non-medicinal"},
+"fr": {
+"hero":"Classification des plantes médicinales", "subtitle":"Comparez trois architectures de deep learning — propulsées par le <b>Modèle 4</b>", "developed":"✨ Développé par :", "input":"📸 Image de la plante", "upload_tab":"📁 Importer un fichier", "camera_tab":"📷 Prendre une photo", "upload":"Importer une image de plante", "capture":"Photographier une plante", "ready_img":"✅ Image prête", "analyse":"📊  |  Analyser la plante  ➔", "upload_first":"Veuillez importer ou prendre une photo d’une plante.", "identifying":"🌿 Identification avec PlantNet...", "fetching":"🧪 Récupération des composés chimiques...", "running":"Exécution des prédictions sur les 3 modèles...", "plant_id":"🌿 Identification de la plante", "scientific":"Nom scientifique", "common":"Nom commun", "confidence":"Confiance PlantNet", "not_found":"PlantNet n’a pas pu identifier cette plante. Essayez une photo plus nette.", "plant_info":"📋 Informations sur la plante (PFAF)", "family":"🌱 Famille", "rating":"⭐ Note médicinale (0–5)", "range":"🗺️ Répartition naturelle", "hazards":"⚠️ Dangers connus", "properties":"💊 Propriétés médicinales", "summary":"📝 Résumé", "not_db":"La plante a été identifiée par PlantNet, mais aucune entrée correspondante n’a été trouvée dans le fichier PFAF.", "chemicals":"🧪 Composés chimiques (PubChem)", "no_chem":"Aucun nom de composé chimique n’a été fourni par PubChem.", "plantnet_error":"L’identification PlantNet est indisponible : ", "baseline":"Architecture de base", "intermediate":"Architecture intermédiaire", "strongweak":"Usage médicinal fort / faible", "primary":"⭐ Modèle principal", "evaluate":"🎯 Évaluer le modèle principal (Modèle 4)", "evaluate_help":"Ignorez les modèles 1 et 2 — la classification du <b>Modèle 4</b> est-elle correcte ?", "yes":"✅ Oui, le Modèle 4 est correct", "no":"❌ Non, le Modèle 4 est incorrect", "thanks":"Merci d’avoir validé la prédiction du Modèle 4 ! 🎉", "select_true":"Sélectionnez la classification réelle de cette plante :", "correct_label":"Étiquette correcte", "medicinal":"Médicinale", "nonmed":"Non médicinale", "submit":"📨 Envoyer la correction du Modèle 4", "saving":"Enregistrement de la correction...", "saved":"Correction enregistrée ! Merci de contribuer à améliorer le Modèle 4 🎉", "save_error":"Erreur lors de l’enregistrement : ", "ready":"Prêt à analyser", "ready_help":"Importez une photo de plante à droite puis cliquez sur <b>Analyser la plante</b>", "academic":"⚠️ <b>Projet académique et éducatif</b> — N’utilisez PAS cet outil pour un diagnostic médical ou une décision de consommation.", "dataset":"Base de données : Plants For A Future (pfaf.org)", "model1":"Modèle 1", "model2":"Modèle 2", "model4":"Modèle 4", "basev1":"Base v1", "midv2":"Intermédiaire v2", "uncertain":"🟡 Incertain", "important":"🟢 Usage médicinal important", "almost":"🔴 Usage médicinal quasi inexistant", "med_result":"🟢 Médicinale", "nonmed_result":"🔴 Non médicinale"},
+"ar": {
+"hero":"تصنيف النباتات الطبية", "subtitle":"قارن بين ثلاث بنيات للتعلم العميق — بالاعتماد على <b>النموذج 4</b>", "developed":"✨ تطوير:", "input":"📸 صورة النبتة", "upload_tab":"📁 رفع ملف", "camera_tab":"📷 التقاط صورة", "upload":"ارفع صورة النبتة", "capture":"التقط صورة للنبتة", "ready_img":"✅ الصورة جاهزة", "analyse":"📊  |  تحليل النبتة  ➔", "upload_first":"يرجى رفع صورة النبتة أو التقاطها أولاً.", "identifying":"🌿 جارٍ التعرف على النبتة باستخدام PlantNet...", "fetching":"🧪 جارٍ جلب المركبات الكيميائية...", "running":"جارٍ تشغيل النماذج الثلاثة...", "plant_id":"🌿 التعرف على النبتة", "scientific":"الاسم العلمي", "common":"الاسم الشائع", "confidence":"نسبة ثقة PlantNet", "not_found":"لم يتمكن PlantNet من تحديد النبتة. جرّب صورة أوضح.", "plant_info":"📋 معلومات النبتة (PFAF)", "family":"🌱 الفصيلة", "rating":"⭐ التقييم الطبي (0–5)", "range":"🗺️ الموطن الأصلي", "hazards":"⚠️ المخاطر المعروفة", "properties":"💊 الخصائص الطبية", "summary":"📝 ملخص", "not_db":"تم التعرف على النبتة بواسطة PlantNet، لكن لم يُعثر على معلومات مطابقة في قاعدة البيانات.", "chemicals":"🧪 المركبات الكيميائية (PubChem)", "no_chem":"لم يُرجع PubChem أسماء للمركبات الكيميائية.", "plantnet_error":"خدمة PlantNet غير متاحة حالياً: ", "baseline":"البنية الأساسية", "intermediate":"البنية المتوسطة", "strongweak":"الاستخدام الطبي القوي / الضعيف", "primary":"⭐ النموذج الرئيسي", "evaluate":"🎯 تقييم النموذج الرئيسي (النموذج 4)", "evaluate_help":"تجاهل النموذجين 1 و2 — هل تصنيف <b>النموذج 4</b> صحيح لهذه النبتة؟", "yes":"✅ نعم، تصنيف النموذج 4 صحيح", "no":"❌ لا، تصنيف النموذج 4 غير صحيح", "thanks":"شكراً لتأكيد نتيجة النموذج 4! 🎉", "select_true":"اختر التصنيف الصحيح لهذه النبتة:", "correct_label":"التصنيف الصحيح", "medicinal":"طبية", "nonmed":"غير طبية", "submit":"📨 إرسال تصحيح النموذج 4", "saving":"جارٍ حفظ التصحيح...", "saved":"تم حفظ التصحيح! شكراً لمساهمتك في تحسين النموذج 4 🎉", "save_error":"خطأ أثناء حفظ الملاحظة: ", "ready":"جاهز للتحليل", "ready_help":"ارفع صورة النبتة من الجهة اليمنى ثم اضغط على <b>تحليل النبتة</b>", "academic":"⚠️ <b>مشروع أكاديمي وتعليمي</b> — لا تستخدم هذه الأداة للتشخيص الطبي أو لاتخاذ قرارات الاستهلاك.", "dataset":"قاعدة البيانات: Plants For A Future (pfaf.org)", "model1":"النموذج 1", "model2":"النموذج 2", "model4":"النموذج 4", "basev1":"الأساسي v1", "midv2":"المتوسط v2", "uncertain":"🟡 غير مؤكد", "important":"🟢 استخدام طبي مهم", "almost":"🔴 استخدام طبي شبه منعدم", "med_result":"🟢 طبية", "nonmed_result":"🔴 غير طبية"}
+}
+
+language_label = st.selectbox("🌐 Language / Langue / اللغة", list(LANGUAGES), index=0, key="site_language")
+LANG = LANGUAGES[language_label]
+def tr(key):
+    return TEXT[LANG].get(key, TEXT["en"].get(key, key))
+
+@st.cache_data(show_spinner=False)
+def translate_botanical_text(value, target):
+    """Translate descriptive database text; keep Latin scientific and chemical names unchanged."""
+    if value is None or not str(value).strip() or target == "en":
+        return value
+    try:
+        from deep_translator import GoogleTranslator
+        return GoogleTranslator(source="auto", target=target).translate(str(value)[:4500]) or value
+    except Exception:
+        return value
+
+if LANG == "ar":
+    st.markdown("<style>.stApp, .stApp * { direction: rtl; } .stButton button { direction: rtl; }</style>", unsafe_allow_html=True)
+
 st.markdown("""
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
@@ -453,90 +487,50 @@ def get_chemical_compounds(scientific_name: str):
 
 
 def render_plant_information(plant_data):
-    """Render PlantNet/PFAF/PubChem results using the current page styling."""
-    st.markdown("### 🌿 Plant Identification")
-
+    st.markdown(f"### {tr('plant_id')}")
     if plant_data.get("scientific_name"):
         identity_cols = st.columns(2, gap="medium")
         with identity_cols[0]:
             sci = html.escape(str(plant_data["scientific_name"]))
-            st.markdown(
-                f'<div class="plant-info-card">'
-                f'<div class="plant-info-title">Scientific Name</div>'
-                f'<div class="plant-info-value"><i>{sci}</i></div></div>',
-                unsafe_allow_html=True,
-            )
+            st.markdown(f'<div class="plant-info-card"><div class="plant-info-title">{tr("scientific")}</div><div class="plant-info-value"><i>{sci}</i></div></div>', unsafe_allow_html=True)
         with identity_cols[1]:
-            common = html.escape(str(plant_data.get("common_name") or "—"))
-            st.markdown(
-                f'<div class="plant-info-card">'
-                f'<div class="plant-info-title">Common Name</div>'
-                f'<div class="plant-info-value">{common}</div></div>',
-                unsafe_allow_html=True,
-            )
-
+            common = html.escape(str(translate_botanical_text(plant_data.get("common_name") or "—", LANG)))
+            st.markdown(f'<div class="plant-info-card"><div class="plant-info-title">{tr("common")}</div><div class="plant-info-value">{common}</div></div>', unsafe_allow_html=True)
         confidence = float(plant_data.get("confidence", 0))
-        st.markdown(
-            f'<div class="plant-info-card">'
-            f'<div class="plant-info-title">PlantNet Confidence</div>'
-            f'<div class="plant-info-value">{confidence:.1f}%</div></div>',
-            unsafe_allow_html=True,
-        )
+        st.markdown(f'<div class="plant-info-card"><div class="plant-info-title">{tr("confidence")}</div><div class="plant-info-value">{confidence:.1f}%</div></div>', unsafe_allow_html=True)
     else:
-        st.warning("PlantNet could not identify this plant. Try a clearer photo.")
+        st.warning(tr("not_found"))
 
     row = plant_data.get("database_row")
     if row:
-        st.markdown("### 📋 Plant Information (PFAF)")
-        fields = [
-            ("Family", "🌱 Family"),
-            ("Medicinal Rating", "⭐ Medicinal Rating (0–5)"),
-            ("Native Range", "🗺️ Native Range"),
-            ("Known Hazards", "⚠️ Known Hazards"),
-        ]
+        st.markdown(f"### {tr('plant_info')}")
+        fields = [("Family", "family"), ("Medicinal Rating", "rating"), ("Native Range", "range"), ("Known Hazards", "hazards")]
         info_cols = st.columns(2, gap="medium")
-        for index, (column_name, label) in enumerate(fields):
+        for index, (column_name, label_key) in enumerate(fields):
             value = row.get(column_name, "—")
             if pd.isna(value) or str(value).strip().lower() in ("", "nan", "none"):
                 value = "—"
+            if column_name != "Medicinal Rating":
+                value = translate_botanical_text(value, LANG)
             safe_value = html.escape(str(value)[:300])
             with info_cols[index % 2]:
-                st.markdown(
-                    f'<div class="plant-info-card">'
-                    f'<div class="plant-info-title">{label}</div>'
-                    f'<div class="plant-info-value">{safe_value}</div></div>',
-                    unsafe_allow_html=True,
-                )
-
-        for column_name, label, limit in [
-            ("Medicinal Properties", "💊 Medicinal Properties", 500),
-            ("Summary", "📝 Summary", 500),
-        ]:
+                st.markdown(f'<div class="plant-info-card"><div class="plant-info-title">{tr(label_key)}</div><div class="plant-info-value">{safe_value}</div></div>', unsafe_allow_html=True)
+        for column_name, label_key, limit in [("Medicinal Properties", "properties", 500), ("Summary", "summary", 500)]:
             value = row.get(column_name, "")
             if not pd.isna(value) and str(value).strip().lower() not in ("", "nan"):
+                value = translate_botanical_text(value, LANG)
                 safe_value = html.escape(str(value)[:limit])
-                st.markdown(
-                    f'<div class="plant-info-card">'
-                    f'<div class="plant-info-title">{label}</div>'
-                    f'<div class="plant-info-value">{safe_value}</div></div>',
-                    unsafe_allow_html=True,
-                )
+                st.markdown(f'<div class="plant-info-card"><div class="plant-info-title">{tr(label_key)}</div><div class="plant-info-value">{safe_value}</div></div>', unsafe_allow_html=True)
     elif plant_data.get("scientific_name"):
-        st.info(
-            "This plant was identified by PlantNet, but no matching entry "
-            "was found in pfaf_plants_small.csv."
-        )
+        st.info(tr("not_db"))
 
     chemicals = plant_data.get("chemicals") or []
     if chemicals:
-        st.markdown("### 🧪 Chemical Compounds (PubChem)")
-        pills = " ".join(
-            f'<span class="chemical-pill">{html.escape(str(name))}</span>'
-            for name in chemicals
-        )
+        st.markdown(f"### {tr('chemicals')}")
+        pills = " ".join(f'<span class="chemical-pill">{html.escape(str(name))}</span>' for name in chemicals)
         st.markdown(pills, unsafe_allow_html=True)
     elif plant_data.get("scientific_name"):
-        st.caption("No chemical compound names were returned by PubChem.")
+        st.caption(tr("no_chem"))
 
 @st.cache_resource
 def load_models():
@@ -556,16 +550,16 @@ def predict(model, img):
 
 def label_v1v2(p_med):
     if p_med > 0.65:
-        return "🟢 Medicinal", p_med, "green-fill", "#4ade80"
+        return tr("med_result"), p_med, "green-fill", "#4ade80"
     if p_med < 0.35:
-        return "🔴 Non-medicinal", 1 - p_med, "red-fill", "#f87171"
-    return "🟡 Uncertain", max(p_med, 1 - p_med), "amber-fill", "#fbbf24"
+        return tr("nonmed_result"), 1 - p_med, "red-fill", "#f87171"
+    return tr("uncertain"), max(p_med, 1 - p_med), "amber-fill", "#fbbf24"
 
 def label_v4(p_med):
     if p_med >= 0.5:
-        return "🟢 Usage médical important", p_med, "green-fill", "#4ade80"
+        return tr("important"), p_med, "green-fill", "#4ade80"
     else:
-        return "🔴 Usage médical quasi inexistant", 1 - p_med, "red-fill", "#f87171"
+        return tr("almost"), 1 - p_med, "red-fill", "#f87171"
 
 def bar(label, pct, fill_cls, text_color):
     return f"""
@@ -582,29 +576,24 @@ for k in ("results", "feedback_sent", "img_bytes", "plant_data"):
     if k not in st.session_state:
         st.session_state[k] = None
 
-st.markdown("""
-<div class="hero-box">
-  <h1 style="margin:0 0 10px 0;font-size:2.3rem;font-weight:800;color:white;
-             text-shadow:0 2px 10px rgba(0,0,0,0.25);">
-    🌿 Medicinal Plant Classifier</h1>
-  <p style="margin:0 0 14px 0;font-size:1.1rem;color:#ecfdf5;opacity:.95;">
-    Compare three deep learning architectures — powered by <b>Model 4</b></p>
-  <span class="hero-badge">
-    ✨ Developed by: <b>Hamza Oulbayyad</b> &bull; <b>Rida Bargach</b>
-  </span>
+st.markdown(f"""
+<div class="hero-box" dir="{'rtl' if LANG == 'ar' else 'ltr'}">
+  <h1 style="margin:0 0 10px 0;font-size:2.3rem;font-weight:800;color:white;text-shadow:0 2px 10px rgba(0,0,0,0.25);">🌿 {tr('hero')}</h1>
+  <p style="margin:0 0 14px 0;font-size:1.1rem;color:#ecfdf5;opacity:.95;">{tr('subtitle')}</p>
+  <span class="hero-badge">{tr('developed')} <b>Hamza Oulbayyad</b> &bull; <b>Rida Bargach</b></span>
 </div>
 """, unsafe_allow_html=True)
 
 col_results, col_input = st.columns([2.2, 1], gap="large")
 
 with col_input:
-    st.markdown("#### 📸 Input Plant Image")
-    tab_up, tab_cam = st.tabs(["📁 Upload File", "📷 Take Photo"])
+    st.markdown(f"#### {tr('input')}")
+    tab_up, tab_cam = st.tabs([tr("upload_tab"), tr("camera_tab")])
     with tab_up:
-        uploaded = st.file_uploader("Upload plant image", type=["jpg", "jpeg", "png", "webp", "jfif"],
+        uploaded = st.file_uploader(tr("upload"), type=["jpg", "jpeg", "png", "webp", "jfif"],
                                     label_visibility="collapsed")
     with tab_cam:
-        camera = st.camera_input("Capture plant photo", label_visibility="collapsed")
+        camera = st.camera_input(tr("capture"), label_visibility="collapsed")
     img_source = uploaded or camera
 
     if img_source:
@@ -615,15 +604,15 @@ with col_input:
         prev_b64 = base64.b64encode(prev_buf.getvalue()).decode("utf-8")
         st.markdown(f"""
         <div class="preview-wrapper">
-          <div class="ready-pill">✅ Image Ready</div>
+          <div class="ready-pill">{tr("ready_img")}</div>
           <img src="data:image/jpeg;base64,{prev_b64}" alt="Plant Preview" />
         </div>
         """, unsafe_allow_html=True)
 
     st.markdown("<div style='height:4px;'></div>", unsafe_allow_html=True)
-    if st.button("📊  |  Analyse Plant  ➔", key="analyse_btn", width="stretch"):
+    if st.button(tr("analyse"), key="analyse_btn", width="stretch"):
         if img_source is None:
-            st.warning("Please upload or capture a plant photo first.")
+            st.warning(tr("upload_first"))
         else:
             image = Image.open(img_source)
             image = ImageOps.exif_transpose(image)
@@ -641,7 +630,7 @@ with col_input:
                 "chemicals": [],
                 "plantnet_error": None,
             }
-            with st.spinner("🌿 Identifying plant with PlantNet..."):
+            with st.spinner(tr("identifying")):
                 try:
                     scientific_name, common_name, confidence = identify_plant(img_bytes)
                     plant_data.update({
@@ -656,14 +645,14 @@ with col_input:
                 plant_data["database_row"] = find_plant_in_database(
                     plant_data["scientific_name"]
                 )
-                with st.spinner("🧪 Retrieving chemical compounds..."):
+                with st.spinner(tr("fetching")):
                     plant_data["chemicals"] = get_chemical_compounds(
                         plant_data["scientific_name"]
                     )
 
             st.session_state.plant_data = plant_data
 
-            with st.spinner("Running inference across all 3 models..."):
+            with st.spinner(tr("running")):
                 p1 = predict(m1, image)
                 p2 = predict(m2, image)
                 p4 = predict(m4, image)
@@ -676,7 +665,7 @@ with col_results:
             render_plant_information(st.session_state.plant_data)
             if st.session_state.plant_data.get("plantnet_error"):
                 st.warning(
-                    "PlantNet identification was unavailable: "
+                    tr("plantnet_error")
                     + str(st.session_state.plant_data["plantnet_error"])
                 )
             st.markdown("<div style='height:14px;'></div>", unsafe_allow_html=True)
@@ -685,9 +674,9 @@ with col_results:
         c1, c2, c3 = st.columns(3, gap="medium")
 
         models_info = [
-            (c1, "Model 1", "Baseline Architecture", "Baseline v1", p1, label_v1v2, False),
-            (c2, "Model 2", "Intermediate Architecture", "Intermediate v2", p2, label_v1v2, False),
-            (c3, "Model 4", "Strong / Weak Medical Use", "⭐ Primary Model", p4, label_v4, True),
+            (c1, tr("model1"), tr("baseline"), tr("basev1"), p1, label_v1v2, False),
+            (c2, tr("model2"), tr("intermediate"), tr("midv2"), p2, label_v1v2, False),
+            (c3, tr("model4"), tr("strongweak"), tr("primary"), p4, label_v4, True),
         ]
 
         for col, model_name, model_sub, badge_txt, p_med, lbl_fn, is_primary in models_info:
@@ -706,14 +695,10 @@ with col_results:
         st.markdown("<div style='height:18px;'></div>", unsafe_allow_html=True)
 
         with st.container():
-            st.markdown("""
-            <div class="feedback-box">
-              <div style="font-size:1.05rem;font-weight:700;color:#4ade80;margin-bottom:4px;">
-                🎯 Evaluate Primary Model (Model 4)
-              </div>
-              <div style="font-size:0.92rem;color:#cbd5e1;margin-bottom:12px;">
-                Ignore Models 1 & 2 above — is <b>Model 4's</b> classification accurate for this plant?
-              </div>
+            st.markdown(f"""
+            <div class="feedback-box" dir="{'rtl' if LANG == 'ar' else 'ltr'}">
+              <div style="font-size:1.05rem;font-weight:700;color:#4ade80;margin-bottom:4px;">{tr('evaluate')}</div>
+              <div style="font-size:0.92rem;color:#cbd5e1;margin-bottom:12px;">{tr('evaluate_help')}</div>
             </div>
             """, unsafe_allow_html=True)
 
@@ -722,52 +707,57 @@ with col_results:
             if not st.session_state.feedback_sent:
                 fc1, fc2 = st.columns(2, gap="medium")
                 with fc1:
-                    if st.button("✅ Yes, Model 4 is correct", width="stretch"):
+                    if st.button(tr("yes"), width="stretch"):
                         st.session_state.feedback_sent = "correct"
                         st.rerun()
                 with fc2:
-                    if st.button("❌ No, Model 4 is wrong", width="stretch", key="wrong_btn_trigger"):
+                    if st.button(tr("no"), width="stretch", key="wrong_btn_trigger"):
                         st.session_state.feedback_sent = "wrong"
                         st.rerun()
 
             elif st.session_state.feedback_sent == "correct":
-                st.success("Thank you for validating Model 4's prediction! 🎉")
+                st.success(tr("thanks"))
 
             elif st.session_state.feedback_sent == "wrong":
-                st.markdown("**Select the true classification for this plant:**")
-                fix = st.selectbox("Correct label", ["", "Medicinal", "Non-medicinal"],
+                st.markdown(f"**{tr('select_true')}**")
+                fix = st.selectbox(tr("correct_label"), ["", tr("medicinal"), tr("nonmed")],
                                    label_visibility="collapsed")
-                if fix and st.button("📨 Submit Correction for Model 4", width="stretch"):
+                if fix and st.button(tr("submit"), width="stretch"):
                     p1, p2, p4 = st.session_state.results
                     lbl4, _, _, _ = label_v4(p4)
-                    with st.spinner("Saving correction to dataset..."):
+                    with st.spinner(tr("saving")):
                         try:
+                            fix_for_dataset = "Medicinal" if fix == tr("medicinal") else "Non-medicinal"
+                            wrong_for_dataset = (
+                                "Strong medical use" if p4 >= 0.5
+                                else "Almost no medical use"
+                            )
                             save_correction_to_github(
-                                lbl4, fix, st.session_state.img_bytes)
+                                wrong_for_dataset, fix_for_dataset, st.session_state.img_bytes)
                             st.session_state.feedback_sent = "done"
                             st.rerun()
                         except Exception as e:
-                            st.error(f"Error saving feedback: {e}")
+                            st.error(tr("save_error") + str(e))
 
             elif st.session_state.feedback_sent == "done":
-                st.success("Correction saved! Thank you for helping improve Model 4 🎉")
+                st.success(tr("saved"))
 
     else:
-        st.markdown("""
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;
+        st.markdown(f"""
+        <div dir="{'rtl' if LANG == 'ar' else 'ltr'}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;
                     height:340px;background:rgba(30,41,59,0.3);border:1px dashed rgba(255,255,255,0.15);
                     border-radius:22px;color:#94a3b8;text-align:center;padding:20px;">
           <div style="font-size:2.5rem;margin-bottom:10px;">🌱</div>
-          <div style="font-size:1.1rem;font-weight:600;color:#e2e8f0;">Ready to Analyse</div>
+          <div style="font-size:1.1rem;font-weight:600;color:#e2e8f0;">{tr("ready")}</div>
           <div style="font-size:0.95rem;margin-top:4px;">
-            Upload a plant photo on the right and click <b>Analyse Plant</b>
+            {tr("ready_help")}
           </div>
         </div>""", unsafe_allow_html=True)
 
-st.markdown("""
-<div style="text-align:center;font-size:.85rem;color:#94a3b8;margin-top:40px;
+st.markdown(f"""
+<div dir="{'rtl' if LANG == 'ar' else 'ltr'}" style="text-align:center;font-size:.85rem;color:#94a3b8;margin-top:40px;
             border-top:1px solid rgba(255,255,255,0.08);padding-top:18px;">
-  ⚠️ <b>Academic & Educational Project</b> — Do NOT use this tool for medical diagnosis or consumption decisions.<br>
-  <b>Hamza Oulbayyad & Rida Bargach</b> • Dataset: Plants For A Future (pfaf.org) • <b>Version 1.3</b>
+  {tr("academic")}<br>
+  <b>Hamza Oulbayyad & Rida Bargach</b> • {tr("dataset")} • <b>Version 1.1</b>
 </div>
 """, unsafe_allow_html=True)
