@@ -768,6 +768,6 @@ st.markdown("""
 <div style="text-align:center;font-size:.85rem;color:#94a3b8;margin-top:40px;
             border-top:1px solid rgba(255,255,255,0.08);padding-top:18px;">
   ⚠️ <b>Academic & Educational Project</b> — Do NOT use this tool for medical diagnosis or consumption decisions.<br>
-  <b>Hamza Oulbayyad & Rida Bargach</b> • Dataset: Plants For A Future (pfaf.org) • <b>Version 1.1</b>
+  <b>Hamza Oulbayyad & Rida Bargach</b> • Dataset: Plants For A Future (pfaf.org) • <b>Version 1.3</b>
 </div>
 """, unsafe_allow_html=True)
