@@ -34,33 +34,75 @@ TEXT = {
 "hero":"تصنيف النباتات الطبية", "subtitle":"قارن بين ثلاث بنيات للتعلم العميق — بالاعتماد على <b>النموذج 4</b>", "developed":"✨ تطوير:", "input":"📸 صورة النبتة", "upload_tab":"📁 رفع ملف", "camera_tab":"📷 التقاط صورة", "upload":"ارفع صورة النبتة", "capture":"التقط صورة للنبتة", "ready_img":"✅ الصورة جاهزة", "analyse":"📊  |  تحليل النبتة  ➔", "upload_first":"يرجى رفع صورة النبتة أو التقاطها أولاً.", "identifying":"🌿 جارٍ التعرف على النبتة باستخدام PlantNet...", "fetching":"🧪 جارٍ جلب المركبات الكيميائية...", "running":"جارٍ تشغيل النماذج الثلاثة...", "plant_id":"🌿 التعرف على النبتة", "scientific":"الاسم العلمي", "common":"الاسم الشائع", "confidence":"نسبة ثقة PlantNet", "not_found":"لم يتمكن PlantNet من تحديد النبتة. جرّب صورة أوضح.", "plant_info":"📋 معلومات النبتة (PFAF)", "family":"🌱 الفصيلة", "rating":"⭐ التقييم الطبي (0–5)", "range":"🗺️ الموطن الأصلي", "hazards":"⚠️ المخاطر المعروفة", "properties":"💊 الخصائص الطبية", "summary":"📝 ملخص", "not_db":"تم التعرف على النبتة بواسطة PlantNet، لكن لم يُعثر على معلومات مطابقة في قاعدة البيانات.", "chemicals":"🧪 المركبات الكيميائية (PubChem)", "chem_note":"تُترك أسماء المركبات الكيميائية بصيغتها العلمية القياسية حفاظاً على دقتها.", "no_chem":"لم يُرجع PubChem أسماء للمركبات الكيميائية.", "plantnet_error":"خدمة PlantNet غير متاحة حالياً: ", "baseline":"البنية الأساسية", "intermediate":"البنية المتوسطة", "strongweak":"الاستخدام الطبي القوي / الضعيف", "primary":"⭐ النموذج الرئيسي", "evaluate":"🎯 تقييم النموذج الرئيسي (النموذج 4)", "evaluate_help":"تجاهل النموذجين 1 و2 — هل تصنيف <b>النموذج 4</b> صحيح لهذه النبتة؟", "yes":"✅ نعم، تصنيف النموذج 4 صحيح", "no":"❌ لا، تصنيف النموذج 4 غير صحيح", "thanks":"شكراً لتأكيد نتيجة النموذج 4! 🎉", "select_true":"اختر التصنيف الصحيح لهذه النبتة:", "correct_label":"التصنيف الصحيح", "medicinal":"طبية", "nonmed":"غير طبية", "submit":"📨 إرسال تصحيح النموذج 4", "saving":"جارٍ حفظ التصحيح...", "saved":"تم حفظ التصحيح! شكراً لمساهمتك في تحسين النموذج 4 🎉", "save_error":"خطأ أثناء حفظ الملاحظة: ", "ready":"جاهز للتحليل", "ready_help":"ارفع صورة النبتة من الجهة اليمنى ثم اضغط على <b>تحليل النبتة</b>", "academic":"⚠️ <b>مشروع أكاديمي وتعليمي</b> — لا تستخدم هذه الأداة للتشخيص الطبي أو لاتخاذ قرارات الاستهلاك.", "dataset":"قاعدة البيانات: Plants For A Future (pfaf.org)", "model1":"النموذج 1", "model2":"النموذج 2", "model4":"النموذج 4", "basev1":"الأساسي v1", "midv2":"المتوسط v2", "uncertain":"🟡 غير مؤكد", "important":"🟢 استخدام طبي مهم", "almost":"🔴 استخدام طبي شبه منعدم", "med_result":"🟢 طبية", "nonmed_result":"🔴 غير طبية"}
 }
 
-language_label = st.selectbox("🌐 Language / Langue / اللغة", list(LANGUAGES), index=0, key="site_language")
+language_label = st.selectbox("🌐 Select display language / Choisir la langue / اختر لغة العرض", list(LANGUAGES), index=0, key="site_language")
 LANG = LANGUAGES[language_label]
 def tr(key):
     return TEXT[LANG].get(key, TEXT["en"].get(key, key))
 
+
+with st.sidebar:
+    st.markdown("### 🌐 Translation")
+    st.caption(
+        "Choose a language above. Plant descriptions are translated when the "
+        "plant identification results are displayed."
+    )
+    if st.button("Test translation service", key="test_translation_service"):
+        try:
+            sample = _translate_cached("Medicinal properties and native habitat", LANG)
+            st.success(f"Translation service is working: {sample}")
+        except Exception as exc:
+            st.error(
+                "Translation service is not working. Install the package with "
+                "`pip install -U deep-translator`, check your internet connection, "
+                f"then restart Streamlit. Details: {exc}"
+            )
+
 @st.cache_data(ttl=86400, show_spinner=False)
 def _translate_cached(value: str, target: str) -> str:
-    """Translate one botanical text value. Errors are raised, never silently cached."""
+    """Translate botanical descriptions; never cache failed translations."""
     from deep_translator import GoogleTranslator
-    translated = GoogleTranslator(source="auto", target=target).translate(value[:4500])
-    if not translated:
+
+    translator = GoogleTranslator(source="auto", target=target)
+    # GoogleTranslator has a per-request text limit. Split long descriptions
+    # at paragraph/sentence boundaries so the entire field is translated.
+    chunks = []
+    remaining = value.strip()
+    while remaining:
+        if len(remaining) <= 4300:
+            chunks.append(remaining)
+            break
+        cut = max(
+            remaining.rfind("\n", 0, 4300),
+            remaining.rfind(". ", 0, 4300),
+            remaining.rfind("; ", 0, 4300),
+        )
+        if cut < 500:
+            cut = 4300
+        else:
+            cut += 1
+        chunks.append(remaining[:cut].strip())
+        remaining = remaining[cut:].strip()
+
+    translated_chunks = [translator.translate(chunk) for chunk in chunks]
+    if any(not item for item in translated_chunks):
         raise RuntimeError("The translation service returned an empty result.")
-    return translated
+    return "\n".join(translated_chunks)
 
 
 def translate_botanical_text(value, target):
-    """Translate descriptive text and retain the original only if translation fails."""
-    if value is None or not str(value).strip() or target == "en":
+    """Translate all descriptive plant text into the chosen interface language."""
+    if value is None:
+        return value
+    original = str(value).strip()
+    if not original or target == "en":
         return value
     try:
-        return _translate_cached(str(value), target)
+        return _translate_cached(original, target)
     except Exception as exc:
-        # Keep the information visible, but report the translation failure in the UI.
         errors = st.session_state.setdefault("translation_errors", [])
-        message = str(exc).strip() or exc.__class__.__name__
-        if message not in errors:
-            errors.append(message)
+        error_text = f"{exc.__class__.__name__}: {str(exc).strip() or 'Translation failed'}"
+        if error_text not in errors:
+            errors.append(error_text)
         return value
 
 if LANG == "ar":
@@ -528,7 +570,10 @@ def find_plant_in_database(scientific_name: str):
     name_column = None
     for column in df_plants.columns:
         normalized = norm(column)
-        if normalized in {"scientificname", "botanicalname", "latinname", "species"}:
+        if normalized in {
+            "scientificname", "botanicalname", "latinname", "species",
+            "scientific", "plantlatinname", "taxon"
+        }:
             name_column = column
             break
     if name_column is None:
@@ -687,12 +732,17 @@ def render_plant_information(plant_data):
             )
         else:
             st.info(tr("not_db"))
+            st.caption(
+                "The language selector translates only text that the app has retrieved. "
+                "If no PFAF record is matched, there are no database descriptions to translate."
+            )
 
     if LANG != "en" and st.session_state.get("translation_errors"):
-        st.warning(
-            "Some plant descriptions could not be translated. Check your internet connection "
-            "and install/update the translation package with: pip install -U deep-translator. "
-            "The original text is shown instead."
+        st.error(
+            "Translation failed for one or more plant fields. The original text is shown "
+            "instead. Install/update `deep-translator`, verify internet access, and use "
+            "the 'Test translation service' control in the sidebar. First error: "
+            + st.session_state.translation_errors[0]
         )
 
     chemicals = plant_data.get("chemicals") or []
