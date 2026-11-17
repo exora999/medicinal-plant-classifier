@@ -29,7 +29,7 @@ TEXT = {
     "en": {
         "lang_label": "Display Language",
         "hero": "Medicinal Plant Classifier",
-        "subtitle": "Compare three deep learning architectures — powered by <b>Model 4</b>",
+        "subtitle": "Hybrid Deep Learning & Botanical Knowledge System — powered by <b>Model 4</b>",
         "developed": "✨ Developed by:",
         "input": "📸 Input Plant Image",
         "upload_tab": "📁 Upload File",
@@ -63,8 +63,10 @@ TEXT = {
         "plantnet_error": "PlantNet identification was unavailable: ",
         "baseline": "Baseline Architecture",
         "intermediate": "Intermediate Architecture",
-        "strongweak": "Strong / Weak Medical Use",
+        "strongweak": "Hybrid Vision + PFAF Decision",
         "primary": "⭐ Primary Model",
+        "source_hybrid": "🧬 Vision + PFAF ({rating}/5)",
+        "source_vision": "👁️ Visual CNN Only",
         "evaluate": "🎯 Evaluate Primary Model (Model 4)",
         "evaluate_help": "Ignore Models 1 & 2 above — is <b>Model 4's</b> classification accurate for this plant?",
         "yes": "✅ Yes, Model 4 is correct",
@@ -96,7 +98,7 @@ TEXT = {
     "fr": {
         "lang_label": "Langue d'affichage",
         "hero": "Classification des plantes médicinales",
-        "subtitle": "Comparez trois architectures de deep learning — propulsées par le <b>Modèle 4</b>",
+        "subtitle": "Système hybride Deep Learning & Base botanique — propulsé par le <b>Modèle 4</b>",
         "developed": "✨ Développé par :",
         "input": "📸 Image de la plante",
         "upload_tab": "📁 Importer un fichier",
@@ -130,8 +132,10 @@ TEXT = {
         "plantnet_error": "L’identification PlantNet est indisponible : ",
         "baseline": "Architecture de base",
         "intermediate": "Architecture intermédiaire",
-        "strongweak": "Usage médicinal fort / faible",
+        "strongweak": "Décision Hybride Vision + PFAF",
         "primary": "⭐ Modèle principal",
+        "source_hybrid": "🧬 Vision + PFAF ({rating}/5)",
+        "source_vision": "👁️ Vision CNN uniquement",
         "evaluate": "🎯 Évaluer le modèle principal (Modèle 4)",
         "evaluate_help": "Ignorez les modèles 1 et 2 — la classification du <b>Modèle 4</b> est-elle correcte ?",
         "yes": "✅ Oui, le Modèle 4 est correct",
@@ -163,7 +167,7 @@ TEXT = {
     "ar": {
         "lang_label": "لغة العرض",
         "hero": "تصنيف النباتات الطبية",
-        "subtitle": "قارن بين ثلاث بنيات للتعلم العميق — بالاعتماد على <b>النموذج 4</b>",
+        "subtitle": "نظام هجين يجمع بين التعلم العميق وقاعدة بيانات PFAF — بالاعتماد على <b>النموذج 4</b>",
         "developed": "✨ تطوير:",
         "input": "📸 صورة النبتة",
         "upload_tab": "📁 رفع ملف",
@@ -197,8 +201,10 @@ TEXT = {
         "plantnet_error": "خدمة PlantNet غير متاحة حالياً: ",
         "baseline": "البنية الأساسية",
         "intermediate": "البنية المتوسطة",
-        "strongweak": "الاستخدام الطبي القوي / الضعيف",
+        "strongweak": "قرار هجين: الرؤية البصرية + PFAF",
         "primary": "⭐ النموذج الرئيسي",
+        "source_hybrid": "🧬 الرؤية البصرية + PFAF ({rating}/5)",
+        "source_vision": "👁️ الرؤية البصرية فقط",
         "evaluate": "🎯 تقييم النموذج الرئيسي (النموذج 4)",
         "evaluate_help": "تجاهل النموذجين 1 و2 — هل تصنيف <b>النموذج 4</b> صحيح لهذه النبتة؟",
         "yes": "✅ نعم، تصنيف النموذج 4 صحيح",
@@ -355,6 +361,28 @@ st.markdown("""
       padding: 3px 12px;
       border-radius: 999px;
       margin-bottom: 10px;
+  }
+  .source-pill-hybrid {
+      display: inline-block;
+      margin-top: 12px;
+      background: rgba(16, 185, 129, 0.18);
+      border: 1px solid rgba(52, 211, 153, 0.45);
+      color: #6ee7b7;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 999px;
+  }
+  .source-pill-vision {
+      display: inline-block;
+      margin-top: 12px;
+      background: rgba(148, 163, 184, 0.14);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      color: #cbd5e1;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 999px;
   }
   .model-title {
       font-size: 1.3rem;
@@ -616,7 +644,7 @@ st.markdown("""
 top_left, top_right = st.columns([3.1, 1.1])
 with top_left:
     st.markdown(
-        '<div class="top-lang-badge">🌿 AI Phytotherapy &bull; PlantNet &bull; PFAF &bull; PubChem</div>',
+        '<div class="top-lang-badge">🌿 Hybrid AI Phytotherapy &bull; PlantNet &bull; PFAF &bull; PubChem</div>',
         unsafe_allow_html=True
     )
 with top_right:
@@ -746,7 +774,7 @@ def save_correction_to_github(wrong: str, correct: str, img_bytes: bytes):
         img_url = None
 
     body = (
-        f"**Model Evaluated:** Model 4 (Primary)\n\n"
+        f"**Model Evaluated:** Model 4 (Hybrid Primary)\n\n"
         f"**Model 4 Prediction:** {wrong}\n\n"
         f"**User Correct Label:** {correct}\n\n"
         + (f"[📷 Plant Image]({img_url})\n\n" if img_url else "")
@@ -871,6 +899,46 @@ def find_plant_in_database(scientific_name: str):
             return partial.iloc[0].to_dict()
     return None
 
+def extract_pfaf_rating(database_row):
+    if not database_row:
+        return None
+    for col, val in database_row.items():
+        norm_col = "".join(ch.lower() for ch in str(col) if ch.isalnum())
+        if norm_col in {"medicinalrating", "rating", "medrating"}:
+            try:
+                if val is None or pd.isna(val):
+                    return None
+                rating = float(val)
+                if 0.0 <= rating <= 5.0:
+                    return rating
+            except (TypeError, ValueError):
+                continue
+    return None
+
+def compute_hybrid_prediction(p_visual: float, plant_data: dict):
+    if not plant_data:
+        return p_visual, "vision", None
+    confidence = float(plant_data.get("confidence") or 0.0)
+    database_row = plant_data.get("database_row")
+    rating = extract_pfaf_rating(database_row)
+
+    if rating is not None and confidence >= 35.0:
+        rating_prob_map = {
+            0: 0.04,
+            1: 0.22,
+            2: 0.68,
+            3: 0.84,
+            4: 0.94,
+            5: 0.99,
+        }
+        rounded_rating = int(round(rating))
+        p_pfaf = rating_prob_map.get(rounded_rating, min(max(rating / 5.0, 0.01), 0.99))
+        alpha = 0.80 if confidence >= 70.0 else (confidence / 100.0)
+        p_hybrid = (1.0 - alpha) * p_visual + alpha * p_pfaf
+        return float(p_hybrid), "hybrid", rounded_rating
+
+    return p_visual, "vision", None
+
 def get_chemical_compounds(scientific_name: str):
     if not scientific_name:
         return []
@@ -963,9 +1031,8 @@ def render_plant_information(plant_data):
         info_cols = st.columns(2, gap="medium")
         card_index = 0
 
-        spinner_ctx = st.spinner(tr("translating")) if LANG != "en" else _io.BytesIO()
         if LANG != "en":
-            with spinner_ctx:
+            with st.spinner(tr("translating")):
                 translated_items = []
                 for column_name, raw_value in row.items():
                     if column_name in excluded_columns or raw_value is None:
@@ -1098,7 +1165,7 @@ def bar(label, pct, fill_cls, text_color):
       </div>
     </div>"""
 
-for k in ("results", "feedback_sent", "img_bytes", "plant_data"):
+for k in ("results", "feedback_sent", "img_bytes", "plant_data", "m4_meta"):
     if k not in st.session_state:
         st.session_state[k] = None
 
@@ -1185,8 +1252,10 @@ with col_input:
             with st.spinner(tr("running")):
                 p1 = predict(m1, image)
                 p2 = predict(m2, image)
-                p4 = predict(m4, image)
-                st.session_state.results = (p1, p2, p4)
+                p4_raw = predict(m4, image)
+                p4_final, m4_mode, pfaf_rating = compute_hybrid_prediction(p4_raw, plant_data)
+                st.session_state.results = (p1, p2, p4_final)
+                st.session_state.m4_meta = (m4_mode, pfaf_rating)
                 st.session_state.feedback_sent = False
 
 with col_results:
@@ -1201,6 +1270,7 @@ with col_results:
             st.markdown("<div style='height:14px;'></div>", unsafe_allow_html=True)
 
         p1, p2, p4 = st.session_state.results
+        m4_mode, pfaf_rating = st.session_state.m4_meta or ("vision", None)
         c1, c2, c3 = st.columns(3, gap="medium")
 
         models_info = [
@@ -1213,6 +1283,13 @@ with col_results:
             lbl, conf, fill_cls, txt_col = lbl_fn(p_med)
             card_cls = "model-card-primary" if is_primary else "model-card"
             tag_cls = "primary-tag" if is_primary else "secondary-tag"
+            source_html = ""
+            if is_primary:
+                if m4_mode == "hybrid" and pfaf_rating is not None:
+                    source_txt = tr("source_hybrid").format(rating=pfaf_rating)
+                    source_html = f'<div class="source-pill-hybrid">{source_txt}</div>'
+                else:
+                    source_html = f'<div class="source-pill-vision">{tr("source_vision")}</div>'
             with col:
                 st.markdown(f"""
                 <div class="{card_cls}" dir="{page_dir}">
@@ -1220,6 +1297,7 @@ with col_results:
                   <div class="model-title">{model_name}</div>
                   <div class="model-sub">{model_sub}</div>
                   {bar(lbl, conf, fill_cls, txt_col)}
+                  {source_html}
                 </div>""", unsafe_allow_html=True)
 
         st.markdown("<div style='height:18px;'></div>", unsafe_allow_html=True)
