@@ -1058,11 +1058,25 @@ def render_plant_information(plant_data):
     elif plant_data.get("scientific_name"):
         st.caption(tr("no_chem"))
 
+import os
+import gdown
+
 @st.cache_resource
 def load_models():
-    m1 = keras.models.load_model("plant_model_v1.keras")
-    m2 = keras.models.load_model("plant_model_v2.keras")
-    m4 = keras.models.load_model("plant_model_v4_pro.keras", compile=False)
+    m1 = keras.models.load_model("plant_model_v1.keras", compile=False)
+    m2 = keras.models.load_model("plant_model_v2.keras", compile=False)
+    
+    model_path = "plant_model_v4_pro.keras"
+    
+    if os.path.exists(model_path) and os.path.getsize(model_path) < 1_000_000:
+        os.remove(model_path)
+        
+    if not os.path.exists(model_path):
+        file_id = "1KosNp7HeNJVMYW0flYBGmVUJP7LjCRjg"
+        url = f"https://drive.google.com/uc?id={file_id}"
+        gdown.download(url, model_path, quiet=False)
+        
+    m4 = keras.models.load_model(model_path, compile=False)
     return m1, m2, m4
 
 m1, m2, m4 = load_models()
