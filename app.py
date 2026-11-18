@@ -29,7 +29,7 @@ TEXT = {
     "en": {
         "lang_label": "Display Language",
         "hero": "Medicinal Plant Classifier",
-        "subtitle": "Compare three deep learning architectures — powered by <b>Model 4</b>",
+        "subtitle": "Compare three deep learning architectures — powered by <b>Model 4 Pro</b>",
         "developed": "✨ Developed by:",
         "input": "📸 Input Plant Image",
         "upload_tab": "📁 Upload File",
@@ -65,18 +65,18 @@ TEXT = {
         "intermediate": "Intermediate Architecture",
         "strongweak": "Strong / Weak Medical Use",
         "primary": "⭐ Primary Model",
-        "evaluate": "🎯 Evaluate Primary Model (Model 4)",
-        "evaluate_help": "Ignore Models 1 & 2 above — is <b>Model 4's</b> classification accurate for this plant?",
-        "yes": "✅ Yes, Model 4 is correct",
-        "no": "❌ No, Model 4 is wrong",
-        "thanks": "Thank you for validating Model 4's prediction! 🎉",
+        "evaluate": "🎯 Evaluate Primary Model (Model 4 Pro)",
+        "evaluate_help": "Ignore Models 1 & 2 above — is <b>Model 4 Pro's</b> classification accurate for this plant?",
+        "yes": "✅ Yes, Model 4 Pro is correct",
+        "no": "❌ No, Model 4 Pro is wrong",
+        "thanks": "Thank you for validating Model 4 Pro's prediction! 🎉",
         "select_true": "Select the true classification for this plant:",
         "correct_label": "Correct label",
         "medicinal": "Medicinal",
         "nonmed": "Non-medicinal",
-        "submit": "📨 Submit Correction for Model 4",
+        "submit": "📨 Submit Correction for Model 4 Pro",
         "saving": "Saving correction to dataset...",
-        "saved": "Correction saved! Thank you for helping improve Model 4 🎉",
+        "saved": "Correction saved! Thank you for helping improve Model 4 Pro 🎉",
         "save_error": "Error saving feedback: ",
         "ready": "Ready to Analyse",
         "ready_help": "Upload a plant photo on the right and click <b>Analyse Plant</b>",
@@ -84,7 +84,7 @@ TEXT = {
         "dataset": "Dataset: Plants For A Future (pfaf.org)",
         "model1": "Model 1",
         "model2": "Model 2",
-        "model4": "Model 4",
+        "model4": "Model 4 Pro",
         "basev1": "Baseline v1",
         "midv2": "Intermediate v2",
         "uncertain": "🟡 Uncertain",
@@ -96,7 +96,7 @@ TEXT = {
     "fr": {
         "lang_label": "Langue d'affichage",
         "hero": "Classification des plantes médicinales",
-        "subtitle": "Comparez trois architectures de deep learning — propulsées par le <b>Modèle 4</b>",
+        "subtitle": "Comparez trois architectures de deep learning — propulsées par le <b>Modèle 4 Pro</b>",
         "developed": "✨ Développé par :",
         "input": "📸 Image de la plante",
         "upload_tab": "📁 Importer un fichier",
@@ -132,18 +132,18 @@ TEXT = {
         "intermediate": "Architecture intermédiaire",
         "strongweak": "Usage médicinal fort / faible",
         "primary": "⭐ Modèle principal",
-        "evaluate": "🎯 Évaluer le modèle principal (Modèle 4)",
-        "evaluate_help": "Ignorez les modèles 1 et 2 — la classification du <b>Modèle 4</b> est-elle correcte ?",
-        "yes": "✅ Oui, le Modèle 4 est correct",
-        "no": "❌ Non, le Modèle 4 est incorrect",
-        "thanks": "Merci d’avoir validé la prédiction du Modèle 4 ! 🎉",
+        "evaluate": "🎯 Évaluer le modèle principal (Modèle 4 Pro)",
+        "evaluate_help": "Ignorez les modèles 1 et 2 — la classification du <b>Modèle 4 Pro</b> est-elle correcte ?",
+        "yes": "✅ Oui, le Modèle 4 Pro est correct",
+        "no": "❌ Non, le Modèle 4 Pro est incorrect",
+        "thanks": "Merci d’avoir validé la prédiction du Modèle 4 Pro ! 🎉",
         "select_true": "Sélectionnez la classification réelle de cette plante :",
         "correct_label": "Étiquette correcte",
         "medicinal": "Médicinale",
         "nonmed": "Non médicinale",
-        "submit": "📨 Envoyer la correction du Modèle 4",
+        "submit": "📨 Envoyer la correction du Modèle 4 Pro",
         "saving": "Enregistrement de la correction...",
-        "saved": "Correction enregistrée ! Merci de contribuer à améliorer le Modèle 4 🎉",
+        "saved": "Correction enregistrée ! Merci de contribuer à améliorer le Modèle 4 Pro 🎉",
         "save_error": "Erreur lors de l’enregistrement : ",
         "ready": "Prêt à analyser",
         "ready_help": "Importez une photo de plante à droite puis cliquez sur <b>Analyser la plante</b>",
@@ -151,7 +151,7 @@ TEXT = {
         "dataset": "Base de données : Plants For A Future (pfaf.org)",
         "model1": "Modèle 1",
         "model2": "Modèle 2",
-        "model4": "Modèle 4",
+        "model4": "Modèle 4 Pro",
         "basev1": "Base v1",
         "midv2": "Intermédiaire v2",
         "uncertain": "🟡 Incertain",
@@ -163,7 +163,7 @@ TEXT = {
     "ar": {
         "lang_label": "لغة العرض",
         "hero": "تصنيف النباتات الطبية",
-        "subtitle": "قارن بين ثلاث بنيات للتعلم العميق — بالاعتماد على <b>النموذج 4</b>",
+        "subtitle": "قارن بين ثلاث بنيات للتعلم العميق — بالاعتماد على <b>النموذج 4 المحترف (Pro)</b>",
         "developed": "✨ تطوير:",
         "input": "📸 صورة النبتة",
         "upload_tab": "📁 رفع ملف",
@@ -199,18 +199,18 @@ TEXT = {
         "intermediate": "البنية المتوسطة",
         "strongweak": "الاستخدام الطبي القوي / الضعيف",
         "primary": "⭐ النموذج الرئيسي",
-        "evaluate": "🎯 تقييم النموذج الرئيسي (النموذج 4)",
-        "evaluate_help": "تجاهل النموذجين 1 و2 — هل تصنيف <b>النموذج 4</b> صحيح لهذه النبتة؟",
-        "yes": "✅ نعم، تصنيف النموذج 4 صحيح",
-        "no": "❌ لا، تصنيف النموذج 4 غير صحيح",
-        "thanks": "شكراً لتأكيد نتيجة النموذج 4! 🎉",
+        "evaluate": "🎯 تقييم النموذج الرئيسي (النموذج 4 المحترف)",
+        "evaluate_help": "تجاهل النموذجين 1 و2 — هل تصنيف <b>النموذج 4 Pro</b> صحيح لهذه النبتة؟",
+        "yes": "✅ نعم، تصنيف النموذج 4 Pro صحيح",
+        "no": "❌ لا، تصنيف النموذج 4 Pro غير صحيح",
+        "thanks": "شكراً لتأكيد نتيجة النموذج 4 Pro! 🎉",
         "select_true": "اختر التصنيف الصحيح لهذه النبتة:",
         "correct_label": "التصنيف الصحيح",
         "medicinal": "طبية",
         "nonmed": "غير طبية",
-        "submit": "📨 إرسال تصحيح النموذج 4",
+        "submit": "📨 إرسال تصحيح النموذج 4 Pro",
         "saving": "جارٍ حفظ التصحيح...",
-        "saved": "تم حفظ التصحيح! شكراً لمساهمتك في تحسين النموذج 4 🎉",
+        "saved": "تم حفظ التصحيح! شكراً لمساهمتك في تحسين النموذج 4 Pro 🎉",
         "save_error": "خطأ أثناء حفظ الملاحظة: ",
         "ready": "جاهز للتحليل",
         "ready_help": "ارفع صورة النبتة من الجهة الجانبية ثم اضغط على <b>تحليل النبتة</b>",
@@ -218,7 +218,7 @@ TEXT = {
         "dataset": "قاعدة البيانات: Plants For A Future (pfaf.org)",
         "model1": "النموذج 1",
         "model2": "النموذج 2",
-        "model4": "النموذج 4",
+        "model4": "النموذج 4 Pro",
         "basev1": "الأساسي v1",
         "midv2": "المتوسط v2",
         "uncertain": "🟡 غير مؤكد",
@@ -729,7 +729,7 @@ def save_correction_to_github(wrong: str, correct: str, img_bytes: bytes):
     req = urllib.request.Request(
         f"https://api.github.com/repos/{repo}/contents/{fname}",
         data=json.dumps({
-            "message": f"correction (Model 4): {wrong} -> {correct}",
+            "message": f"correction (Model 4 Pro): {wrong} -> {correct}",
             "content": b64
         }).encode(),
         method="PUT",
@@ -746,8 +746,8 @@ def save_correction_to_github(wrong: str, correct: str, img_bytes: bytes):
         img_url = None
 
     body = (
-        f"**Model Evaluated:** Model 4 (Primary)\n\n"
-        f"**Model 4 Prediction:** {wrong}\n\n"
+        f"**Model Evaluated:** Model 4 Pro (Primary)\n\n"
+        f"**Model 4 Pro Prediction:** {wrong}\n\n"
         f"**User Correct Label:** {correct}\n\n"
         + (f"[📷 Plant Image]({img_url})\n\n" if img_url else "")
         + "*Submitted via Medicinal Plant Classifier*"
@@ -755,7 +755,7 @@ def save_correction_to_github(wrong: str, correct: str, img_bytes: bytes):
     req2 = urllib.request.Request(
         f"https://api.github.com/repos/{repo}/issues",
         data=json.dumps({
-            "title": f"Model 4 Correction: {wrong} -> {correct}",
+            "title": f"Model 4 Pro Correction: {wrong} -> {correct}",
             "body": body,
             "labels": ["correction"]
         }).encode(),
@@ -1062,7 +1062,7 @@ def render_plant_information(plant_data):
 def load_models():
     m1 = keras.models.load_model("plant_model_v1.keras")
     m2 = keras.models.load_model("plant_model_v2.keras")
-    m4 = keras.models.load_model("plant_model_v4.keras")
+    m4 = keras.models.load_model("plant_model_v4_pro.keras")
     return m1, m2, m4
 
 m1, m2, m4 = load_models()
@@ -1293,6 +1293,6 @@ st.markdown(f"""
 <div dir="{page_dir}" style="text-align:center;font-size:.85rem;color:#94a3b8;margin-top:40px;
             border-top:1px solid rgba(255,255,255,0.08);padding-top:18px;">
   {tr("academic")}<br>
-  <b>Hamza Oulbayyad & Rida Bargach</b> • {tr("dataset")} • <b>Version 1.2</b>
+  <b>Hamza Oulbayyad & Rida Bargach</b> • {tr("dataset")} • <b>Version 1.3</b>
 </div>
 """, unsafe_allow_html=True)
