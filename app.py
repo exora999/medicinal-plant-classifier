@@ -1062,7 +1062,7 @@ def render_plant_information(plant_data):
 def load_models():
     m1 = keras.models.load_model("plant_model_v1.keras")
     m2 = keras.models.load_model("plant_model_v2.keras")
-    m4 = keras.models.load_model("plant_model_v4_pro.keras")
+    m4 = keras.models.load_model("plant_model_v4_pro.keras", compile=False)
     return m1, m2, m4
 
 m1, m2, m4 = load_models()
