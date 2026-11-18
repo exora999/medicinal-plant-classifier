@@ -4,6 +4,7 @@ import urllib.parse
 import html
 import uuid
 import base64
+import os
 import io as _io
 import time
 from pathlib import Path
@@ -12,6 +13,7 @@ import pandas as pd
 import streamlit as st
 from PIL import Image, ImageOps
 from tensorflow import keras
+import gdown
 
 st.set_page_config(
     page_title="Medicinal Plant Classifier — Hamza Oulbayyad & Rida Bargach",
@@ -29,7 +31,7 @@ TEXT = {
     "en": {
         "lang_label": "Display Language",
         "hero": "Medicinal Plant Classifier",
-        "subtitle": "Compare three deep learning architectures — powered by <b>Model 4 Pro</b>",
+        "subtitle": "Compare four deep learning architectures — powered by <b>Model 4 Pro</b>",
         "developed": "✨ Developed by:",
         "input": "📸 Input Plant Image",
         "upload_tab": "📁 Upload File",
@@ -42,7 +44,7 @@ TEXT = {
         "identifying": "🌿 Identifying plant with PlantNet...",
         "fetching": "🧪 Retrieving chemical compounds...",
         "translating": "🌐 Translating botanical information...",
-        "running": "Running inference across all 3 models...",
+        "running": "Running inference across all 4 models...",
         "plant_id": "Plant Identification",
         "scientific": "Scientific Name",
         "common": "Common Name",
@@ -63,10 +65,11 @@ TEXT = {
         "plantnet_error": "PlantNet identification was unavailable: ",
         "baseline": "Baseline Architecture",
         "intermediate": "Intermediate Architecture",
+        "v4_standard": "Standard v4 Architecture",
         "strongweak": "Strong / Weak Medical Use",
         "primary": "⭐ Primary Model",
         "evaluate": "🎯 Evaluate Primary Model (Model 4 Pro)",
-        "evaluate_help": "Ignore Models 1 & 2 above — is <b>Model 4 Pro's</b> classification accurate for this plant?",
+        "evaluate_help": "Ignore Models 1, 2 & 4 above — is <b>Model 4 Pro's</b> classification accurate for this plant?",
         "yes": "✅ Yes, Model 4 Pro is correct",
         "no": "❌ No, Model 4 Pro is wrong",
         "thanks": "Thank you for validating Model 4 Pro's prediction! 🎉",
@@ -84,9 +87,11 @@ TEXT = {
         "dataset": "Dataset: Plants For A Future (pfaf.org)",
         "model1": "Model 1",
         "model2": "Model 2",
-        "model4": "Model 4 Pro",
+        "model4": "Model 4",
+        "model4_pro": "Model 4 Pro",
         "basev1": "Baseline v1",
         "midv2": "Intermediate v2",
+        "v4std": "Standard v4",
         "uncertain": "🟡 Uncertain",
         "important": "🟢 Significant medical use",
         "almost": "🔴 Almost no medical use",
@@ -96,7 +101,7 @@ TEXT = {
     "fr": {
         "lang_label": "Langue d'affichage",
         "hero": "Classification des plantes médicinales",
-        "subtitle": "Comparez trois architectures de deep learning — propulsées par le <b>Modèle 4 Pro</b>",
+        "subtitle": "Comparez quatre architectures de deep learning — propulsées par le <b>Modèle 4 Pro</b>",
         "developed": "✨ Développé par :",
         "input": "📸 Image de la plante",
         "upload_tab": "📁 Importer un fichier",
@@ -109,7 +114,7 @@ TEXT = {
         "identifying": "🌿 Identification avec PlantNet...",
         "fetching": "🧪 Récupération des composés chimiques...",
         "translating": "🌐 Traduction des informations botaniques...",
-        "running": "Exécution des prédictions sur les 3 modèles...",
+        "running": "Exécution des prédictions sur les 4 modèles...",
         "plant_id": "Identification de la plante",
         "scientific": "Nom scientifique",
         "common": "Nom commun",
@@ -130,10 +135,11 @@ TEXT = {
         "plantnet_error": "L’identification PlantNet est indisponible : ",
         "baseline": "Architecture de base",
         "intermediate": "Architecture intermédiaire",
+        "v4_standard": "Architecture v4 Standard",
         "strongweak": "Usage médicinal fort / faible",
         "primary": "⭐ Modèle principal",
         "evaluate": "🎯 Évaluer le modèle principal (Modèle 4 Pro)",
-        "evaluate_help": "Ignorez les modèles 1 et 2 — la classification du <b>Modèle 4 Pro</b> est-elle correcte ?",
+        "evaluate_help": "Ignorez les modèles 1, 2 et 4 — la classification du <b>Modèle 4 Pro</b> est-elle correcte ?",
         "yes": "✅ Oui, le Modèle 4 Pro est correct",
         "no": "❌ Non, le Modèle 4 Pro est incorrect",
         "thanks": "Merci d’avoir validé la prédiction du Modèle 4 Pro ! 🎉",
@@ -151,9 +157,11 @@ TEXT = {
         "dataset": "Base de données : Plants For A Future (pfaf.org)",
         "model1": "Modèle 1",
         "model2": "Modèle 2",
-        "model4": "Modèle 4 Pro",
+        "model4": "Modèle 4",
+        "model4_pro": "Modèle 4 Pro",
         "basev1": "Base v1",
         "midv2": "Intermédiaire v2",
+        "v4std": "v4 Standard",
         "uncertain": "🟡 Incertain",
         "important": "🟢 Usage médicinal important",
         "almost": "🔴 Usage médicinal quasi inexistant",
@@ -163,7 +171,7 @@ TEXT = {
     "ar": {
         "lang_label": "لغة العرض",
         "hero": "تصنيف النباتات الطبية",
-        "subtitle": "قارن بين ثلاث بنيات للتعلم العميق — بالاعتماد على <b>النموذج 4 المحترف (Pro)</b>",
+        "subtitle": "قارن بين أربع بنيات للتعلم العميق — بالاعتماد على <b>النموذج 4 المحترف (Pro)</b>",
         "developed": "✨ تطوير:",
         "input": "📸 صورة النبتة",
         "upload_tab": "📁 رفع ملف",
@@ -176,7 +184,7 @@ TEXT = {
         "identifying": "🌿 جارٍ التعرف على النبتة باستخدام PlantNet...",
         "fetching": "🧪 جارٍ جلب المركبات الكيميائية...",
         "translating": "🌐 جارٍ ترجمة المعلومات النباتية...",
-        "running": "جارٍ تشغيل النماذج الثلاثة...",
+        "running": "جارٍ تشغيل النماذج الأربعة...",
         "plant_id": "التعرف على النبتة",
         "scientific": "الاسم العلمي",
         "common": "الاسم الشائع",
@@ -197,10 +205,11 @@ TEXT = {
         "plantnet_error": "خدمة PlantNet غير متاحة حالياً: ",
         "baseline": "البنية الأساسية",
         "intermediate": "البنية المتوسطة",
+        "v4_standard": "بنية v4 القياسية",
         "strongweak": "الاستخدام الطبي القوي / الضعيف",
         "primary": "⭐ النموذج الرئيسي",
         "evaluate": "🎯 تقييم النموذج الرئيسي (النموذج 4 المحترف)",
-        "evaluate_help": "تجاهل النموذجين 1 و2 — هل تصنيف <b>النموذج 4 Pro</b> صحيح لهذه النبتة؟",
+        "evaluate_help": "تجاهل النماذج 1 و2 و4 — هل تصنيف <b>النموذج 4 Pro</b> صحيح لهذه النبتة؟",
         "yes": "✅ نعم، تصنيف النموذج 4 Pro صحيح",
         "no": "❌ لا، تصنيف النموذج 4 Pro غير صحيح",
         "thanks": "شكراً لتأكيد نتيجة النموذج 4 Pro! 🎉",
@@ -218,9 +227,11 @@ TEXT = {
         "dataset": "قاعدة البيانات: Plants For A Future (pfaf.org)",
         "model1": "النموذج 1",
         "model2": "النموذج 2",
-        "model4": "النموذج 4 Pro",
+        "model4": "النموذج 4",
+        "model4_pro": "النموذج 4 Pro",
         "basev1": "الأساسي v1",
         "midv2": "المتوسط v2",
+        "v4std": "v4 القياسي",
         "uncertain": "🟡 غير مؤكد",
         "important": "🟢 استخدام طبي مهم",
         "almost": "🔴 استخدام طبي شبه منعدم",
@@ -308,7 +319,7 @@ st.markdown("""
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 22px;
-      padding: 24px 18px;
+      padding: 20px 14px;
       text-align: center;
       height: 100%;
       transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
@@ -323,7 +334,7 @@ st.markdown("""
       backdrop-filter: blur(12px);
       border: 1.5px solid #4ade80;
       border-radius: 22px;
-      padding: 24px 18px;
+      padding: 20px 14px;
       text-align: center;
       height: 100%;
       box-shadow: 0 10px 30px -10px rgba(74, 222, 128, 0.25);
@@ -338,11 +349,11 @@ st.markdown("""
       background: rgba(74, 222, 128, 0.18);
       color: #4ade80;
       border: 1px solid rgba(74, 222, 128, 0.4);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 700;
-      padding: 3px 12px;
+      padding: 3px 10px;
       border-radius: 999px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       letter-spacing: 0.5px;
       text-transform: uppercase;
   }
@@ -350,45 +361,45 @@ st.markdown("""
       display: inline-block;
       background: rgba(148, 163, 184, 0.15);
       color: #94a3b8;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 600;
-      padding: 3px 12px;
+      padding: 3px 10px;
       border-radius: 999px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
   }
   .model-title {
-      font-size: 1.3rem;
+      font-size: 1.15rem;
       font-weight: 800;
       color: #f8fafc;
       margin-bottom: 4px;
   }
   .model-sub {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: #94a3b8;
-      margin-bottom: 18px;
+      margin-bottom: 14px;
   }
-  .bar-wrap { margin: 10px 0 6px 0; }
-  .bar-label { font-size: 1.02rem; font-weight: 700; margin-bottom: 8px; }
+  .bar-wrap { margin: 8px 0 4px 0; }
+  .bar-label { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
   .bar-track {
       background: rgba(15, 23, 42, 0.8);
       border-radius: 999px;
-      height: 24px;
+      height: 22px;
       width: 100%;
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.08);
       padding: 2px;
   }
   .bar-fill {
-      height: 18px;
+      height: 16px;
       border-radius: 999px;
       display: flex;
       align-items: center;
-      padding-right: 10px;
+      padding-right: 8px;
       justify-content: flex-end;
       color: white;
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       font-weight: 800;
-      min-width: 50px;
+      min-width: 45px;
       transition: width 0.6s ease;
   }
   .green-fill { background: linear-gradient(90deg, #15803d, #22c55e, #4ade80); }
@@ -1058,28 +1069,23 @@ def render_plant_information(plant_data):
     elif plant_data.get("scientific_name"):
         st.caption(tr("no_chem"))
 
-import os
-import gdown
+def download_drive_model(model_path: str, file_id: str):
+    if os.path.exists(model_path) and os.path.getsize(model_path) < 1_000_000:
+        os.remove(model_path)
+    if not os.path.exists(model_path):
+        url = f"https://drive.google.com/uc?id={file_id}"
+        gdown.download(url, model_path, quiet=False)
+    return keras.models.load_model(model_path, compile=False)
 
 @st.cache_resource
 def load_models():
     m1 = keras.models.load_model("plant_model_v1.keras", compile=False)
     m2 = keras.models.load_model("plant_model_v2.keras", compile=False)
-    
-    model_path = "plant_model_v4_pro.keras"
-    
-    if os.path.exists(model_path) and os.path.getsize(model_path) < 1_000_000:
-        os.remove(model_path)
-        
-    if not os.path.exists(model_path):
-        file_id = "1KosNp7HeNJVMYW0flYBGmVUJP7LjCRjg"
-        url = f"https://drive.google.com/uc?id={file_id}"
-        gdown.download(url, model_path, quiet=False)
-        
-    m4 = keras.models.load_model(model_path, compile=False)
-    return m1, m2, m4
+    m4_std = download_drive_model("plant_model_v4.keras", "1AK6TIwNur9uIfPW8eOWcNnFxNifqsDgg")
+    m4_pro = download_drive_model("plant_model_v4_pro.keras", "1KosNp7HeNJVMYW0flYBGmVUJP7LjCRjg")
+    return m1, m2, m4_std, m4_pro
 
-m1, m2, m4 = load_models()
+m1, m2, m4_std, m4_pro = load_models()
 df_plants = load_plant_database()
 
 def predict(model, img):
@@ -1199,8 +1205,9 @@ with col_input:
             with st.spinner(tr("running")):
                 p1 = predict(m1, image)
                 p2 = predict(m2, image)
-                p4 = predict(m4, image)
-                st.session_state.results = (p1, p2, p4)
+                p4_s = predict(m4_std, image)
+                p4_p = predict(m4_pro, image)
+                st.session_state.results = (p1, p2, p4_s, p4_p)
                 st.session_state.feedback_sent = False
 
 with col_results:
@@ -1214,13 +1221,14 @@ with col_results:
                 )
             st.markdown("<div style='height:14px;'></div>", unsafe_allow_html=True)
 
-        p1, p2, p4 = st.session_state.results
-        c1, c2, c3 = st.columns(3, gap="medium")
+        p1, p2, p4_s, p4_p = st.session_state.results
+        c1, c2, c3, c4 = st.columns(4, gap="small")
 
         models_info = [
             (c1, tr("model1"), tr("baseline"), tr("basev1"), p1, label_v1v2, False),
             (c2, tr("model2"), tr("intermediate"), tr("midv2"), p2, label_v1v2, False),
-            (c3, tr("model4"), tr("strongweak"), tr("primary"), p4, label_v4, True),
+            (c3, tr("model4"), tr("v4_standard"), tr("v4std"), p4_s, label_v4, False),
+            (c4, tr("model4_pro"), tr("strongweak"), tr("primary"), p4_p, label_v4, True),
         ]
 
         for col, model_name, model_sub, badge_txt, p_med, lbl_fn, is_primary in models_info:
@@ -1270,12 +1278,12 @@ with col_results:
                     label_visibility="collapsed"
                 )
                 if fix and st.button(tr("submit"), width="stretch"):
-                    p1, p2, p4 = st.session_state.results
+                    p1, p2, p4_s, p4_p = st.session_state.results
                     with st.spinner(tr("saving")):
                         try:
                             fix_for_dataset = "Medicinal" if fix == tr("medicinal") else "Non-medicinal"
                             wrong_for_dataset = (
-                                "Strong medical use" if p4 >= 0.5
+                                "Strong medical use" if p4_p >= 0.5
                                 else "Almost no medical use"
                             )
                             save_correction_to_github(
@@ -1307,6 +1315,6 @@ st.markdown(f"""
 <div dir="{page_dir}" style="text-align:center;font-size:.85rem;color:#94a3b8;margin-top:40px;
             border-top:1px solid rgba(255,255,255,0.08);padding-top:18px;">
   {tr("academic")}<br>
-  <b>Hamza Oulbayyad & Rida Bargach</b> • {tr("dataset")} • <b>Version 1.3</b>
+  <b>Hamza Oulbayyad & Rida Bargach</b> • {tr("dataset")} • <b>Version 1.4</b>
 </div>
 """, unsafe_allow_html=True)
